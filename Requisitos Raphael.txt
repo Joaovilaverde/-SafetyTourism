@@ -1,0 +1,11 @@
+Requisitos Funcionais
+- Mostrar informações de saúde sobre destinos turísticos (países)
+- Gerar relatórios epidemiológicos para consulta
+- Acompanhar o estado de evolução de surtos
+- Mostrar recomendações da OMS
+- Registar utilizadores (morada, email telefone)
+
+
+Requisitos Não Funcionais
+- App desenvolvida em MVC NET e EF
+- 
