@@ -1,0 +1,17 @@
+Registar Funcionario
+(Nome NIF e-Mail)
+
+Registar Utilizador
+(Nome, Morada, e-mail telefone)
+
+Funcionário regista destino turistico (Destino, estado epidimiologico)
+
+Dados do destino turistico
+(Local)
+
+Estado Epidimiologico
+(Nivel de Gravidade, a/s doença/s, nr de infetados semanal)
+
+
+
+
