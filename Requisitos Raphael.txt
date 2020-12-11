@@ -3,9 +3,9 @@ Requisitos Funcionais
 - Gerar relatórios epidemiológicos para consulta
 - Acompanhar o estado de evolução de surtos
 - Mostrar recomendações da OMS
-- Registar utilizadores (morada, email telefone)
-
+- Operacoes CRUD utilizadores (morada, email, telefone)
+- Operacoes CRUD destinos
 
 Requisitos Não Funcionais
 - App desenvolvida em MVC NET e EF
-- 
+- Validar registo utilizadores - verificar se ja existe
