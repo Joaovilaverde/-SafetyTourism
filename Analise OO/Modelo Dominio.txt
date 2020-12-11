@@ -1,0 +1,64 @@
+-class Plataforma
+destinos
+utilizadores
+funcionario
+recomendacoes da OMS
+
+-class Destino
+nome local
+relatorio epidemiologico
+
+-class Relatorio
+doença
+grau gravidade
+infectados por 100k
+
+-class Utilizador
+morada
+email
+telefone
+
+-class Funcionario
+email
+
+_____________________________
+
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+class Plataforma {
+  -String designacao
+}
+
+class Destino {
+  -String local
+}
+
+class Relatorio {
+  -String doenca
+  -String data
+  -String grauGravidade
+  -Int infectadosPor100k
+}
+
+class Utilizador {
+  -String email
+  -String morada
+  -Int telefone
+}
+
+class Funcionario {
+  -String email
+}
+
+
+Plataforma "1" -- "*" Destino : possui >
+Plataforma "1" -- "*" Utilizador : possui >
+Plataforma "1" -- "*" Funcionario : possui >
+
+Destino "1" -- "1" Relatorio: tem >
+
+Funcionario "1" -- "*" Destino: regista >
+@enduml
