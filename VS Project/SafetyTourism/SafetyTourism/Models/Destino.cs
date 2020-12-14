@@ -8,7 +8,7 @@ namespace SafetyTourism.Models
 {
     public class Destino
     {
-        public int Id { get; set; }
+        public int DestinoId { get; set; }
         public string Nome { get; set; }
         public ICollection<Relatorio> Relatorios { get; set; }
     }
