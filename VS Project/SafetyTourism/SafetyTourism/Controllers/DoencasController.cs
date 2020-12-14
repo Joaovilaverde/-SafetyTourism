@@ -165,7 +165,7 @@ namespace SafetyTourism.Controllers
             var recomendacaoQuery = from r in _context.Recomendacoes
                                 orderby r.Nome
                                 select r;
-            ViewBag.DestinoId = new SelectList(recomendacaoQuery.AsNoTracking(), "RecomendacaoId", "Nome", selectedRecomendacao);
+            ViewBag.RecomendacaoId = new SelectList(recomendacaoQuery.AsNoTracking(), "RecomendacaoId", "Nome", selectedRecomendacao);
         }
     }
 }
