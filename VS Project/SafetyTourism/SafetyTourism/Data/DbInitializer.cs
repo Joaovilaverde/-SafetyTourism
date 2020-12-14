@@ -72,26 +72,53 @@ namespace SafetyTourism.Data
             }
             context.SaveChanges();
 
-            var relatorios = new Relatorio[]
+            var doencas = new Doenca[]
             {
-            new Relatorio{RelatorioId=1, DestinoId=1, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=2, DestinoId=1, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-11"), Gravidade=Gravidade.MuitoMau, InfectadosPor100k=100},
-            new Relatorio{RelatorioId=3, DestinoId=1, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-18"), Gravidade=Gravidade.Pior, InfectadosPor100k=500},
-            new Relatorio{RelatorioId=4, DestinoId=2, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=5, DestinoId=3, Doenca="Hyperbeam", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Apocalipse, InfectadosPor100k=100000},
-            new Relatorio{RelatorioId=6, DestinoId=4, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=7, DestinoId=5, Doenca="Ingleses", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Bom, InfectadosPor100k=3},
-            new Relatorio{RelatorioId=8, DestinoId=6, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=9, DestinoId=7, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=10, DestinoId=8, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=11, DestinoId=9, Doenca="Covid-19.5", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
-            new Relatorio{RelatorioId=12, DestinoId=10, Doenca="Malária", Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Pior, InfectadosPor100k=500},
-            new Relatorio{RelatorioId=13, DestinoId=10, Doenca="Malária", Data=DateTime.Parse("2020-12-11"), Gravidade=Gravidade.Péssimo, InfectadosPor100k=1337},
+            new Doenca{DoencaId=1, Nome="Covid-19.5", RecomendacaoId=1},
+            new Doenca{DoencaId=2, Nome="Hyperbeam", RecomendacaoId=2},
+            new Doenca{DoencaId=3, Nome="Ingleses", RecomendacaoId=3},
+            new Doenca{DoencaId=4, Nome="Malária", RecomendacaoId=4},
+            };
+            foreach (Doenca d in doencas)
+            {
+                context.Doencas.Add(d);
+            }
+            context.SaveChanges();
+
+            var recomendacoes = new Recomendacao[]
+            {
+            new Recomendacao{RecomendacaoId=1, Conteudo="Lavar bem as mãos, não cuspir na boca dos outros, usar máscara, rezar aos santinhos todos para não apanhar."},
+            new Recomendacao{RecomendacaoId=2, Conteudo="Conformar-se com a morte certa."},
+            new Recomendacao{RecomendacaoId=3, Conteudo="Acabar com o pito da guia, chicken with piri-piri, fechar Nando's, isolar o Allgarve."},
+            new Recomendacao{RecomendacaoId=4, Conteudo="Tomar o comprimido quando começar a ver turvo e amarelado."},
+            };
+            foreach (Recomendacao r in recomendacoes)
+            {
+                context.Recomendacoes.Add(r);
+            }
+            context.SaveChanges();
+
+            var afectados = new AfectadoPor[]
+            {
+            new AfectadoPor{AfectadoPorId=1, DestinoId=1, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=2, DestinoId=1, DoencaId=1, Data=DateTime.Parse("2020-12-11"), Gravidade=Gravidade.MuitoMau, InfectadosPor100k=100},
+            new AfectadoPor{AfectadoPorId=3, DestinoId=1, DoencaId=1, Data=DateTime.Parse("2020-12-18"), Gravidade=Gravidade.Pior, InfectadosPor100k=500},
+            new AfectadoPor{AfectadoPorId=4, DestinoId=1, DoencaId=4, Data=DateTime.Parse("2020-12-18"), Gravidade=Gravidade.Péssimo, InfectadosPor100k=1999},
+            new AfectadoPor{AfectadoPorId=5, DestinoId=2, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=6, DestinoId=3, DoencaId=2, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Apocalipse, InfectadosPor100k=100000},
+            new AfectadoPor{AfectadoPorId=7, DestinoId=4, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=8, DestinoId=5, DoencaId=3, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Bom, InfectadosPor100k=3},
+            new AfectadoPor{AfectadoPorId=9, DestinoId=6, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=10, DestinoId=7, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=11, DestinoId=8, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=12, DestinoId=9, DoencaId=1, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Mau, InfectadosPor100k=50},
+            new AfectadoPor{AfectadoPorId=13, DestinoId=10, DoencaId=4, Data=DateTime.Parse("2020-12-04"), Gravidade=Gravidade.Pior, InfectadosPor100k=500},
+            new AfectadoPor{AfectadoPorId=14, DestinoId=10, DoencaId=4, Data=DateTime.Parse("2020-12-11"), Gravidade=Gravidade.Péssimo, InfectadosPor100k=1337},
 
             };
-            foreach (Relatorio r in relatorios)
+            foreach (AfectadoPor a in afectados)
             {
-                context.Relatorios.Add(r);
+                context.Afectados.Add(a);
             }
             context.SaveChanges();
         }

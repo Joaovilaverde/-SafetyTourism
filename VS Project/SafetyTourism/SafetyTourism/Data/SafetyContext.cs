@@ -16,6 +16,8 @@ namespace SafetyTourism.Data
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Utilizador> Utilizadores { get; set; }
         public DbSet<Destino> Destinos { get; set; }
-        public DbSet<Relatorio> Relatorios { get; set; }
+        public DbSet<Doenca> Doencas { get; set; }
+        public DbSet<AfectadoPor> Afectados { get; set; }
+        public DbSet<Recomendacao> Recomendacoes { get; set; }
     }
 }
