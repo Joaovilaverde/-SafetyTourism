@@ -27,7 +27,9 @@ namespace SafetyTourism
         {
             services.AddDbContext<SafetyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddControllersWithViews();
         }
 

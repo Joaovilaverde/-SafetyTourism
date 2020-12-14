@@ -8,6 +8,8 @@ namespace SafetyTourism.Models
     public class Recomendacao
     {
         public int RecomendacaoId { get; set; }
+
+        public string Nome { get; set; }
         public string Conteudo { get; set; }
     }
 }

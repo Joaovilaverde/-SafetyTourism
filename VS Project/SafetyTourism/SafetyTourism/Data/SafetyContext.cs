@@ -19,5 +19,14 @@ namespace SafetyTourism.Data
         public DbSet<Doenca> Doencas { get; set; }
         public DbSet<AfectadoPor> Afectados { get; set; }
         public DbSet<Recomendacao> Recomendacoes { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Funcionario>().ToTable("Funcionario");
+            modelBuilder.Entity<Utilizador>().ToTable("Utilizador");
+            modelBuilder.Entity<Destino>().ToTable("Destino");
+            modelBuilder.Entity<Doenca>().ToTable("Doenca");
+            modelBuilder.Entity<AfectadoPor>().ToTable("AfectadoPor");
+            modelBuilder.Entity<Recomendacao>().ToTable("Recomendacao");
+        }
     }
 }

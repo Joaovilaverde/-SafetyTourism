@@ -1,0 +1,51 @@
+﻿@model SafetyTourism.Models.AfectadoPor
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>AfectadoPor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gravidade)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gravidade)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InfectadosPor100k)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InfectadosPor100k)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.destino)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.destino.DestinoId)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.doenca)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.doenca.DoencaId)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AfectadoPorId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
