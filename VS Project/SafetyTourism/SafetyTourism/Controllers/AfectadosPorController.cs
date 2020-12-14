@@ -49,8 +49,10 @@ namespace SafetyTourism.Controllers
         // GET: AfectadosPor/Create
         public IActionResult Create()
         {
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId");
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId");
+            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId");
+            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId");
+            PopulateDestinosDropDownList();
+            PopulateDoencasDropDownList();
             return View();
         }
 
@@ -67,8 +69,10 @@ namespace SafetyTourism.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
+            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
+            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
+            PopulateDestinosDropDownList(afectadoPor.DestinoId);
+            PopulateDoencasDropDownList(afectadoPor.DoencaId);
             return View(afectadoPor);
         }
 
@@ -85,8 +89,10 @@ namespace SafetyTourism.Controllers
             {
                 return NotFound();
             }
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
+            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
+            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
+            PopulateDestinosDropDownList(afectadoPor.DestinoId);
+            PopulateDoencasDropDownList(afectadoPor.DoencaId);
             return View(afectadoPor);
         }
 
@@ -122,8 +128,10 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
+            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
+            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
+            PopulateDestinosDropDownList(afectadoPor.DestinoId);
+            PopulateDoencasDropDownList(afectadoPor.DoencaId);
             return View(afectadoPor);
         }
 
@@ -161,6 +169,21 @@ namespace SafetyTourism.Controllers
         private bool AfectadoPorExists(int id)
         {
             return _context.Afectados.Any(e => e.AfectadoPorId == id);
+        }
+
+        private void PopulateDestinosDropDownList(object selectedDestino = null)
+        {
+            var destinosQuery = from d in _context.Destinos
+                                   orderby d.Nome
+                                   select d;
+            ViewBag.DestinoId = new SelectList(destinosQuery.AsNoTracking(), "DestinoId", "Nome", selectedDestino);
+        }
+        private void PopulateDoencasDropDownList(object selectedDoenca = null)
+        {
+            var doencasQuery = from r in _context.Doencas
+                                orderby r.Nome
+                                select r;
+            ViewBag.DoencaId = new SelectList(doencasQuery.AsNoTracking(), "DoencaId", "Nome", selectedDoenca);
         }
     }
 }

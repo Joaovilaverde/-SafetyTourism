@@ -48,7 +48,8 @@ namespace SafetyTourism.Controllers
         // GET: Doencas/Create
         public IActionResult Create()
         {
-            ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId");
+            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId");
+            PopulateRecomendacaoDropDownList();
             return View();
         }
 
@@ -65,7 +66,8 @@ namespace SafetyTourism.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
+            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
+            PopulateRecomendacaoDropDownList(doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -82,7 +84,8 @@ namespace SafetyTourism.Controllers
             {
                 return NotFound();
             }
-            ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
+            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
+            PopulateRecomendacaoDropDownList(doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -118,7 +121,8 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
+            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
+            PopulateRecomendacaoDropDownList(doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -155,6 +159,13 @@ namespace SafetyTourism.Controllers
         private bool DoencaExists(int id)
         {
             return _context.Doencas.Any(e => e.DoencaId == id);
+        }
+        private void PopulateRecomendacaoDropDownList(object selectedRecomendacao = null)
+        {
+            var recomendacaoQuery = from r in _context.Recomendacoes
+                                orderby r.Nome
+                                select r;
+            ViewBag.DestinoId = new SelectList(recomendacaoQuery.AsNoTracking(), "RecomendacaoId", "Nome", selectedRecomendacao);
         }
     }
 }
