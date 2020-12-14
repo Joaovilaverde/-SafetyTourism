@@ -13,6 +13,6 @@ namespace SafetyTourism.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public int RecomendacaoId { get; set; }
-        public Recomendacao recomendacao { get; set; }
+        public Recomendacao Recomendacao { get; set; }
     }
 }

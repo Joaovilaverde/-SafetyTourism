@@ -11,38 +11,38 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Data)
+            Destino
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Destino.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            Doença
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Doenca.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            Data
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Data)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gravidade)
+            Gravidade
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Gravidade)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.InfectadosPor100k)
+        <dt class="col-sm-2">
+            Nº de Infectados por 100.000 habitantes
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.InfectadosPor100k)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.destino)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.destino.DestinoId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.doenca)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.doenca.DoencaId)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.AfectadoPorId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista</a>
 </div>

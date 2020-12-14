@@ -22,7 +22,7 @@ namespace SafetyTourism.Controllers
         // GET: Doencas
         public async Task<IActionResult> Index()
         {
-            var safetyContext = _context.Doencas.Include(d => d.recomendacao);
+            var safetyContext = _context.Doencas.Include(d => d.Recomendacao);
             return View(await safetyContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace SafetyTourism.Controllers
             }
 
             var doenca = await _context.Doencas
-                .Include(d => d.recomendacao)
+                .Include(d => d.Recomendacao)
                 .FirstOrDefaultAsync(m => m.DoencaId == id);
             if (doenca == null)
             {
@@ -131,7 +131,7 @@ namespace SafetyTourism.Controllers
             }
 
             var doenca = await _context.Doencas
-                .Include(d => d.recomendacao)
+                .Include(d => d.Recomendacao)
                 .FirstOrDefaultAsync(m => m.DoencaId == id);
             if (doenca == null)
             {

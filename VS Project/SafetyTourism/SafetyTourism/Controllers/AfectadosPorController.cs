@@ -10,23 +10,23 @@ using SafetyTourism.Models;
 
 namespace SafetyTourism.Controllers
 {
-    public class AfectadoPorsController : Controller
+    public class AfectadosPorController : Controller
     {
         private readonly SafetyContext _context;
 
-        public AfectadoPorsController(SafetyContext context)
+        public AfectadosPorController(SafetyContext context)
         {
             _context = context;
         }
 
-        // GET: AfectadoPors
+        // GET: AfectadosPor
         public async Task<IActionResult> Index()
         {
-            var safetyContext = _context.Afectados.Include(a => a.destino).Include(a => a.doenca);
+            var safetyContext = _context.Afectados.Include(a => a.Destino).Include(a => a.Doenca);
             return View(await safetyContext.ToListAsync());
         }
 
-        // GET: AfectadoPors/Details/5
+        // GET: AfectadosPor/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,8 +35,8 @@ namespace SafetyTourism.Controllers
             }
 
             var afectadoPor = await _context.Afectados
-                .Include(a => a.destino)
-                .Include(a => a.doenca)
+                .Include(a => a.Destino)
+                .Include(a => a.Doenca)
                 .FirstOrDefaultAsync(m => m.AfectadoPorId == id);
             if (afectadoPor == null)
             {
@@ -46,7 +46,7 @@ namespace SafetyTourism.Controllers
             return View(afectadoPor);
         }
 
-        // GET: AfectadoPors/Create
+        // GET: AfectadosPor/Create
         public IActionResult Create()
         {
             ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId");
@@ -54,12 +54,12 @@ namespace SafetyTourism.Controllers
             return View();
         }
 
-        // POST: AfectadoPors/Create
+        // POST: AfectadosPor/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AfectadoPorId,Data,Gravidade,InfectadosPor100k,DestinoId,DoencaId")] AfectadoPor afectadoPor)
+        public async Task<IActionResult> Create([Bind("AfectadoPorId,DestinoId,DoencaId,Data,Gravidade,InfectadosPor100k")] AfectadoPor afectadoPor)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace SafetyTourism.Controllers
             return View(afectadoPor);
         }
 
-        // GET: AfectadoPors/Edit/5
+        // GET: AfectadosPor/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,12 +90,12 @@ namespace SafetyTourism.Controllers
             return View(afectadoPor);
         }
 
-        // POST: AfectadoPors/Edit/5
+        // POST: AfectadosPor/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AfectadoPorId,Data,Gravidade,InfectadosPor100k,DestinoId,DoencaId")] AfectadoPor afectadoPor)
+        public async Task<IActionResult> Edit(int id, [Bind("AfectadoPorId,DestinoId,DoencaId,Data,Gravidade,InfectadosPor100k")] AfectadoPor afectadoPor)
         {
             if (id != afectadoPor.AfectadoPorId)
             {
@@ -127,7 +127,7 @@ namespace SafetyTourism.Controllers
             return View(afectadoPor);
         }
 
-        // GET: AfectadoPors/Delete/5
+        // GET: AfectadosPor/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,8 +136,8 @@ namespace SafetyTourism.Controllers
             }
 
             var afectadoPor = await _context.Afectados
-                .Include(a => a.destino)
-                .Include(a => a.doenca)
+                .Include(a => a.Destino)
+                .Include(a => a.Doenca)
                 .FirstOrDefaultAsync(m => m.AfectadoPorId == id);
             if (afectadoPor == null)
             {
@@ -147,7 +147,7 @@ namespace SafetyTourism.Controllers
             return View(afectadoPor);
         }
 
-        // POST: AfectadoPors/Delete/5
+        // POST: AfectadosPor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

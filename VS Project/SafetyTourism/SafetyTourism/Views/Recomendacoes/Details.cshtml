@@ -1,23 +1,23 @@
 ﻿@model SafetyTourism.Models.Recomendacao
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes da recomendação";
 }
 
-<h1>Details</h1>
+
 
 <div>
-    <h4>Recomendacao</h4>
+    <h4>Detalhes da recomendação</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
+            Nome
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Conteudo)
+            Conteúdo
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Conteudo)
@@ -25,6 +25,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.RecomendacaoId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.RecomendacaoId">Editar</a> |
+    <a asp-action="Index">Voltar à lista</a>
 </div>

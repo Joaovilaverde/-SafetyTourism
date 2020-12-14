@@ -15,14 +15,17 @@ namespace SafetyTourism.Models
     {
 
         public int AfectadoPorId { get; set; }
+        public int DestinoId { get; set; }
+        public Destino Destino { get; set; }
+        public int DoencaId { get; set; }
+        public Doenca Doenca { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime Data { get; set; }
         public Gravidade? Gravidade { get; set; }
+
+        [Range(0, 100000)]
         public int InfectadosPor100k { get; set; }
-        public int DestinoId { get; set; }
-        public Destino destino { get; set; }
-        public int DoencaId { get; set; }
-        public Doenca doenca { get; set; }
+        
     }
 }
