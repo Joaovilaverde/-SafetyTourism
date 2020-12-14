@@ -20,10 +20,73 @@ namespace SafetyTourism.Controllers
         }
 
         // GET: AfectadosPor
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
             var safetyContext = _context.Afectados.Include(a => a.Destino).Include(a => a.Doenca);
             return View(await safetyContext.ToListAsync());
+        }*/
+
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["DestinoSortParm"] = String.IsNullOrEmpty(sortOrder) ? "destinoId_desc" : "";
+            ViewData["DoencaSortParm"] = sortOrder == "DoencaId" ? "doencaId_desc" : "DoencaId";
+            ViewData["DataSortParm"] = sortOrder == "Data" ? "data_desc" : "Data";
+            ViewData["InfectadosSortParm"] = sortOrder == "InfectadosPor100k" ? "infectados_desc" : "InfectadosPor100k";
+            ViewData["GravidadeSortParm"] = sortOrder == "Gravidade" ? "gravidade_desc" : "Gravidade";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var afectados = from a in _context.Afectados.Include(a => a.Destino).Include(a => a.Doenca)
+                            select a;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                afectados = afectados.Where(a => a.Destino.Nome.Contains(searchString)
+                                       || a.Doenca.Nome.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "destinoId_desc":
+                    afectados = afectados.OrderByDescending(a => a.Destino.Nome);
+                    break;
+                case "DoencaId":
+                    afectados = afectados.OrderBy(a => a.Doenca.Nome);
+                    break;
+                case "doencaId_desc":
+                    afectados = afectados.OrderByDescending(a => a.Doenca.Nome);
+                    break;
+                case "Data":
+                    afectados = afectados.OrderBy(a => a.Data);
+                    break;
+                case "data_desc":
+                    afectados = afectados.OrderByDescending(a => a.Data);
+                    break;
+                case "InfectadosPor100k":
+                    afectados = afectados.OrderBy(a => a.InfectadosPor100k);
+                    break;
+                case "infectados_desc":
+                    afectados = afectados.OrderByDescending(a => a.InfectadosPor100k);
+                    break;
+                case "Gravidade":
+                    afectados = afectados.OrderBy(a => a.Gravidade);
+                    break;
+                case "gravidade_desc":
+                    afectados = afectados.OrderByDescending(a => a.Gravidade);
+                    break;
+                default:
+                    afectados = afectados.OrderBy(a => a.Destino.Nome);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<AfectadoPor>.CreateAsync(afectados.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: AfectadosPor/Details/5
