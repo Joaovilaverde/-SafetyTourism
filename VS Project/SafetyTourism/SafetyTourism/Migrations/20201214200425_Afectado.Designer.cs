@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SafetyTourism.Data;
 
 namespace SafetyTourism.Migrations
 {
     [DbContext(typeof(SafetyContext))]
-    partial class SafetyContextModelSnapshot : ModelSnapshot
+    [Migration("20201214200425_Afectado")]
+    partial class Afectado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

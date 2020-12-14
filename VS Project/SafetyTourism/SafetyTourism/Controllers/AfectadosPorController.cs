@@ -49,8 +49,6 @@ namespace SafetyTourism.Controllers
         // GET: AfectadosPor/Create
         public IActionResult Create()
         {
-            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId");
-            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId");
             PopulateDestinosDropDownList();
             PopulateDoencasDropDownList();
             return View();
@@ -61,7 +59,7 @@ namespace SafetyTourism.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AfectadoPorId,DestinoId,DoencaId,Data,Gravidade,InfectadosPor100k")] AfectadoPor afectadoPor)
+        public async Task<IActionResult> Create([Bind("AfectadoPorId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] AfectadoPor afectadoPor)
         {
             if (ModelState.IsValid)
             {
@@ -69,8 +67,6 @@ namespace SafetyTourism.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
-            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
             PopulateDestinosDropDownList(afectadoPor.DestinoId);
             PopulateDoencasDropDownList(afectadoPor.DoencaId);
             return View(afectadoPor);
@@ -89,8 +85,6 @@ namespace SafetyTourism.Controllers
             {
                 return NotFound();
             }
-            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
-            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
             PopulateDestinosDropDownList(afectadoPor.DestinoId);
             PopulateDoencasDropDownList(afectadoPor.DoencaId);
             return View(afectadoPor);
@@ -101,7 +95,7 @@ namespace SafetyTourism.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AfectadoPorId,DestinoId,DoencaId,Data,Gravidade,InfectadosPor100k")] AfectadoPor afectadoPor)
+        public async Task<IActionResult> Edit(int id, [Bind("AfectadoPorId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] AfectadoPor afectadoPor)
         {
             if (id != afectadoPor.AfectadoPorId)
             {
@@ -128,8 +122,6 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", afectadoPor.DestinoId);
-            //ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", afectadoPor.DoencaId);
             PopulateDestinosDropDownList(afectadoPor.DestinoId);
             PopulateDoencasDropDownList(afectadoPor.DoencaId);
             return View(afectadoPor);
@@ -174,15 +166,15 @@ namespace SafetyTourism.Controllers
         private void PopulateDestinosDropDownList(object selectedDestino = null)
         {
             var destinosQuery = from d in _context.Destinos
-                                   orderby d.Nome
-                                   select d;
+                                orderby d.Nome
+                                select d;
             ViewBag.DestinoId = new SelectList(destinosQuery.AsNoTracking(), "DestinoId", "Nome", selectedDestino);
         }
         private void PopulateDoencasDropDownList(object selectedDoenca = null)
         {
             var doencasQuery = from r in _context.Doencas
-                                orderby r.Nome
-                                select r;
+                               orderby r.Nome
+                               select r;
             ViewBag.DoencaId = new SelectList(doencasQuery.AsNoTracking(), "DoencaId", "Nome", selectedDoenca);
         }
     }

@@ -32,14 +32,13 @@
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Gravidade</label>
-                <input asp-for="Gravidade" class="form-control" />
-                <span asp-validation-for="Gravidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label>Nº de Infectados por 100.000 habitantes</label>
                 <input asp-for="InfectadosPor100k" class="form-control" />
                 <span asp-validation-for="InfectadosPor100k" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Gravidade" class="form-control" />
+                <span asp-validation-for="Gravidade" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
