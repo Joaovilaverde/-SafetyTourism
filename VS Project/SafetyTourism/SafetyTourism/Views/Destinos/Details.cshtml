@@ -1,13 +1,12 @@
 ﻿@model SafetyTourism.Models.Destino
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes do destino";
 }
 
-<h1>Details</h1>
 
 <div>
-    <h4>Destino</h4>
+    <h4>Detalhes do destino</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -19,6 +18,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.DestinoId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.DestinoId">Editar</a> |
     <a asp-action="Index">Voltar à lista</a>
 </div>

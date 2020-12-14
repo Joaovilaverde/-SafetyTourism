@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SafetyTourism.Models.Doenca>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Doenças";
 }
 
-<h1>Index</h1>
+<h1>Doenças</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar nova</a>
 </p>
 <table class="table">
     <thead>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Recomendacao.Conteudo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DoencaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DoencaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DoencaId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.DoencaId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.DoencaId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.DoencaId">Apagar</a>
             </td>
         </tr>
 }
