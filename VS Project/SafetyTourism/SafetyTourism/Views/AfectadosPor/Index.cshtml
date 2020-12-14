@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SafetyTourism.Models.AfectadoPor>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Afectados por";
 }
 
-<h1>Index</h1>
+<h1>Afectados por</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar novo</a>
 </p>
 <table class="table">
     <thead>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.InfectadosPor100k)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AfectadoPorId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AfectadoPorId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AfectadoPorId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.AfectadoPorId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.AfectadoPorId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.AfectadoPorId">Apagar</a>
             </td>
         </tr>
 }
