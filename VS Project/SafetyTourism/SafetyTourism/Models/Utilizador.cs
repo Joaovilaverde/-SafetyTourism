@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace SafetyTourism.Models
 {
-    public class Utilizador
+    public class Utilizador : IdentityUser
     {
-        public int UtilizadorId { get; set; }
-        public string Nome { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Morada { get; set; }
-        public int Tel { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public byte[] ProfilePicture { get; set; }
     }
 }
