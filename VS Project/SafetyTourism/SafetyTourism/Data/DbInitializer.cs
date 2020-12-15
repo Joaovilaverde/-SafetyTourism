@@ -23,18 +23,18 @@ namespace SafetyTourism.Data
 
             var utilizadores = new Utilizador[]
             {
-            new Utilizador{Email="dcmacedo02@upskill.pt",Morada="Porto",Tel=911999111},
-            new Utilizador{Email="nuno-maister@upskill.pt",Morada="Vila Verde",Tel=911999112},
-            new Utilizador{Email="jpmfranco@upskill.pt",Morada="Custoias",Tel=911999113},
-            new Utilizador{Email="ines.machado.oliveira@upskill.pt",Morada="Famalicão",Tel=911999114},
-            new Utilizador{Email="raphael.silva.rdcs@upskill.pt",Morada="Paços de Ferreira",Tel=911999115},
-            new Utilizador{Email="cgf@upskill.pt",Morada="Foz",Tel=911999116},
-            new Utilizador{Email="prp@upskill.pt",Morada="Jacarta",Tel=911999117},
-            new Utilizador{Email="pbs@upskill.pt",Morada="Tatooine",Tel=911999118},
-            new Utilizador{Email="psm@upskill.pt",Morada="Copertino",Tel=911999119},
-            new Utilizador{Email="acm@isep.pt",Morada="Rãs",Tel=911999120},
-            new Utilizador{Email="srocha@iscap.ipp.pt",Morada="Dubai",Tel=911999121},
-            new Utilizador{Email="ana.godinho@ptmss.com.pt",Morada="Cascais",Tel=962057406}
+            new Utilizador{Nome="Daniel",Password="123",Email="dcmacedo02@upskill.pt",Morada="Porto",Tel=911999111},
+            new Utilizador{Nome="João",Password="123",Email="nuno-maister@upskill.pt",Morada="Vila Verde",Tel=911999112},
+            new Utilizador{Nome="Zé",Password="123",Email="jpmfranco@upskill.pt",Morada="Custoias",Tel=911999113},
+            new Utilizador{Nome="Inês",Password="123",Email="ines.machado.oliveira@upskill.pt",Morada="Famalicão",Tel=911999114},
+            new Utilizador{Nome="Raphael",Password="123",Email="raphael.silva.rdcs@upskill.pt",Morada="Paços de Ferreira",Tel=911999115},
+            new Utilizador{Nome="Carlos",Password="123",Email="cgf@upskill.pt",Morada="Foz",Tel=911999116},
+            new Utilizador{Nome="Paulo",Password="123",Email="prp@upskill.pt",Morada="Jacarta",Tel=911999117},
+            new Utilizador{Nome="Paulo",Password="123",Email="pbs@upskill.pt",Morada="Tatooine",Tel=911999118},
+            new Utilizador{Nome="Paulo",Password="123",Email="psm@upskill.pt",Morada="Copertino",Tel=911999119},
+            new Utilizador{Nome="Constantino",Password="123",Email="acm@isep.pt",Morada="Rãs",Tel=911999120},
+            new Utilizador{Nome="Susana",Password="123",Email="srocha@iscap.ipp.pt",Morada="Dubai",Tel=911999121},
+            new Utilizador{Nome="Ana",Password="123",Email="ana.godinho@ptmss.com.pt",Morada="Cascais",Tel=962057406}
             };
             foreach (Utilizador u in utilizadores)
             {
@@ -46,11 +46,11 @@ namespace SafetyTourism.Data
 
             var funcionarios = new Funcionario[]
             {
-            new Funcionario{Email="dcmacedo02@upskill.pt"},
-            new Funcionario{Email="nuno-maister@upskill.pt"},
-            new Funcionario{Email="jpmfranco@upskill.pt"},
-            new Funcionario{Email="ines.machado.oliveira@upskill.pt"},
-            new Funcionario{Email="raphael.silva.rdcs@upskill.pt"}
+            new Funcionario{Nome="Daniel Admin",Password="123",Email="dcmacedo02@upskill.pt"},
+            new Funcionario{Nome="João Admin",Password="123",Email="nuno-maister@upskill.pt"},
+            new Funcionario{Nome="Zé Admin",Password="123",Email="jpmfranco@upskill.pt"},
+            new Funcionario{Nome="Inês Admin",Password="123",Email="ines.machado.oliveira@upskill.pt"},
+            new Funcionario{Nome="Raphael Admin",Password="123",Email="raphael.silva.rdcs@upskill.pt"}
             };
             foreach (Funcionario f in funcionarios)
             {

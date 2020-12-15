@@ -10,22 +10,22 @@ using SafetyTourism.Models;
 
 namespace SafetyTourism.Controllers
 {
-    public class UtilizadorsController : Controller
+    public class UtilizadoresController : Controller
     {
         private readonly SafetyContext _context;
 
-        public UtilizadorsController(SafetyContext context)
+        public UtilizadoresController(SafetyContext context)
         {
             _context = context;
         }
 
-        // GET: Utilizadors
+        // GET: Utilizadores
         public async Task<IActionResult> Index()
         {
             return View(await _context.Utilizadores.ToListAsync());
         }
 
-        // GET: Utilizadors/Details/5
+        // GET: Utilizadores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +43,18 @@ namespace SafetyTourism.Controllers
             return View(utilizador);
         }
 
-        // GET: Utilizadors/Create
+        // GET: Utilizadores/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Utilizadors/Create
+        // POST: Utilizadores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UtilizadorId,Email,Morada,Tel")] Utilizador utilizador)
+        public async Task<IActionResult> Create([Bind("UtilizadorId,Nome,Email,Password,Morada,Tel")] Utilizador utilizador)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace SafetyTourism.Controllers
             return View(utilizador);
         }
 
-        // GET: Utilizadors/Edit/5
+        // GET: Utilizadores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +81,12 @@ namespace SafetyTourism.Controllers
             return View(utilizador);
         }
 
-        // POST: Utilizadors/Edit/5
+        // POST: Utilizadores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UtilizadorId,Email,Morada,Tel")] Utilizador utilizador)
+        public async Task<IActionResult> Edit(int id, [Bind("UtilizadorId,Nome,Email,Password,Morada,Tel")] Utilizador utilizador)
         {
             if (id != utilizador.UtilizadorId)
             {
@@ -116,7 +116,7 @@ namespace SafetyTourism.Controllers
             return View(utilizador);
         }
 
-        // GET: Utilizadors/Delete/5
+        // GET: Utilizadores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +134,7 @@ namespace SafetyTourism.Controllers
             return View(utilizador);
         }
 
-        // POST: Utilizadors/Delete/5
+        // POST: Utilizadores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

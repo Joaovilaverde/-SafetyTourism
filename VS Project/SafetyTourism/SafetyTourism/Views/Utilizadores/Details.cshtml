@@ -1,29 +1,41 @@
 ﻿@model SafetyTourism.Models.Utilizador
 
 @{
-    ViewData["Title"] = "Detalhes de utilizador";
+    ViewData["Title"] = "Detalhes do utilizador";
 }
 
 
 
 <div>
-    <h4>Detalhes de utilizador</h4>
+    <h4>Detalhes do utilizador</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            Nome
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            Email
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Morada)
+            Password
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class = "col-sm-2">
+            Morada
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Morada)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tel)
+            Telefone
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Tel)

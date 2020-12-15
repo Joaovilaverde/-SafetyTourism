@@ -7,13 +7,19 @@
 <h1>Funcionários</h1>
 
 <p>
-    <a asp-action="Create">Criar novo funcionário</a>
+    <a asp-action="Create">Criar novo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Nome
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Password
             </th>
             <th></th>
         </tr>
@@ -22,7 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Editar</a> |

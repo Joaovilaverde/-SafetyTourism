@@ -7,19 +7,25 @@
 <h1>Utilizadores</h1>
 
 <p>
-    <a asp-action="Create">Criar novo utilizador</a>
+    <a asp-action="Create">Criar novo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Morada)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tel)
+                Password
+            </th>
+            <th>
+                Morada
+            </th>
+            <th>
+                Telefone
             </th>
             <th></th>
         </tr>
@@ -28,7 +34,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Morada)
