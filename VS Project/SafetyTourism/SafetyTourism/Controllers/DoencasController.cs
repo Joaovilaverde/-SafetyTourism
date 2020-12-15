@@ -12,15 +12,14 @@ namespace SafetyTourism.Controllers
 {
     public class DoencasController : Controller
     {
-        private readonly SafetyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DoencasController(SafetyContext context)
+        public DoencasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: Doencas
-
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -37,7 +36,7 @@ namespace SafetyTourism.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             var doencas = from d in _context.Doencas
-            select d;
+                          select d;
             if (!String.IsNullOrEmpty(searchString))
             {
                 doencas = doencas.Where(d => d.Nome.Contains(searchString));
@@ -76,7 +75,6 @@ namespace SafetyTourism.Controllers
         // GET: Doencas/Create
         public IActionResult Create()
         {
-            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId");
             return View();
         }
 
@@ -93,7 +91,6 @@ namespace SafetyTourism.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -110,7 +107,6 @@ namespace SafetyTourism.Controllers
             {
                 return NotFound();
             }
-            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -146,7 +142,6 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
             return View(doenca);
         }
 

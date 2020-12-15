@@ -8,7 +8,7 @@ namespace SafetyTourism.Data
 {
     public class DbInitializer
     {
-        public static void Initialize(SafetyContext context)
+        public static void Initialize(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
 
@@ -94,28 +94,28 @@ namespace SafetyTourism.Data
             }
             context.SaveChanges();
             
-            //Preencher AfectadosPor
+            //Preencher Surtos
 
-            var afectados = new AfectadoPor[]
+            var surtos = new Surto[]
             {
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-11"), InfectadosPor100k=100, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-18"), InfectadosPor100k=500, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Malária").DoencaId, Data=DateTime.Parse("2020-12-18"), InfectadosPor100k=1999, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Dubai").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Tatooine").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Hyperbeam").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=100000, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Death Star 1").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Algarve").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Ingleses").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=3, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Japão").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Minas Tirith").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Shire").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Mordor").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Rivendell").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Malária").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=500, Gravidade=""},
-            new AfectadoPor{DestinoId=destinos.Single(s=>s.Nome=="Rivendell").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Malária").DoencaId, Data=DateTime.Parse("2020-12-11"), InfectadosPor100k=1337, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-11"), InfectadosPor100k=100, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-18"), InfectadosPor100k=500, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Jacarta").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Malária").DoencaId, Data=DateTime.Parse("2020-12-18"), InfectadosPor100k=1999, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Dubai").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Tatooine").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Hyperbeam").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=100000, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Death Star 1").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Algarve").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Ingleses").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=3, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Japão").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Minas Tirith").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Shire").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Mordor").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Covid-19.5").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=50, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Rivendell").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Malária").DoencaId, Data=DateTime.Parse("2020-12-04"), InfectadosPor100k=500, Gravidade=""},
+            new Surto{DestinoId=destinos.Single(s=>s.Nome=="Rivendell").DestinoId, DoencaId=doencas.Single(s=>s.Nome=="Malária").DoencaId, Data=DateTime.Parse("2020-12-11"), InfectadosPor100k=1337, Gravidade=""},
             };
-            foreach (AfectadoPor a in afectados)
+            foreach (Surto s in surtos)
             {
-                context.Afectados.Add(a);
+                context.Surtos.Add(s);
             }
             context.SaveChanges();
         }

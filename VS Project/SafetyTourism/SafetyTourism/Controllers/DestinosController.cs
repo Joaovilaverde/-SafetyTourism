@@ -12,15 +12,14 @@ namespace SafetyTourism.Controllers
 {
     public class DestinosController : Controller
     {
-        private readonly SafetyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DestinosController(SafetyContext context)
+        public DestinosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         // GET: Destinos
-
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -37,7 +36,7 @@ namespace SafetyTourism.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             var destinos = from d in _context.Destinos
-                            select d;
+                           select d;
             if (!String.IsNullOrEmpty(searchString))
             {
                 destinos = destinos.Where(d => d.Nome.Contains(searchString));

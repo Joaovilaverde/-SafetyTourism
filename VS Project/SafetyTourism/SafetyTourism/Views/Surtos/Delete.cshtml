@@ -1,4 +1,4 @@
-﻿@model SafetyTourism.Models.AfectadoPor
+﻿@model SafetyTourism.Models.Surto
 
 @{
     ViewData["Title"] = "Apagar surto";
@@ -44,7 +44,7 @@
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="AfectadoPorId" />
+        <input type="hidden" asp-for="SurtoId" />
         <input type="submit" value="Apagar" class="btn btn-danger" /> |
         <a asp-action="Index">Voltar à lista</a>
     </form>

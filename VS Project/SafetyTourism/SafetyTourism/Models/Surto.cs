@@ -7,14 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SafetyTourism.Models
 {
-    /*public enum Gravidade
-    {
-        Bom, Medio, Mau, MuitoMau, Pior, Péssimo, Apocalipse
-    }*/
-    public class AfectadoPor
+    public class Surto
     {
 
-        public int AfectadoPorId { get; set; }
+        public int SurtoId { get; set; }
         public int DestinoId { get; set; }
         public Destino Destino { get; set; }
         public int DoencaId { get; set; }

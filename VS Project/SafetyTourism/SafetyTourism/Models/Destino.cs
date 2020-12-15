@@ -10,6 +10,6 @@ namespace SafetyTourism.Models
     {
         public int DestinoId { get; set; }
         public string Nome { get; set; }
-        public ICollection<AfectadoPor> Afectados { get; set; }
+        public ICollection<Surto> Afectados { get; set; }
     }
 }

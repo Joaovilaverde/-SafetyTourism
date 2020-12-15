@@ -12,9 +12,9 @@ namespace SafetyTourism.Controllers
 {
     public class UtilizadoresController : Controller
     {
-        private readonly SafetyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UtilizadoresController(SafetyContext context)
+        public UtilizadoresController(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -1,30 +1,27 @@
-﻿@model SafetyTourism.Models.AfectadoPor
+﻿@model SafetyTourism.Models.Surto
 
 @{
-    ViewData["Title"] = "Criar surto";
+    ViewData["Title"] = "Editar surto";
 }
 
 
 
-<h4>Criar surto</h4>
+<h4>Editar surto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SurtoId" />
             <div class="form-group">
                 <label>Destino</label>
-                <select asp-for="DestinoId" class="form-control" asp-items="ViewBag.DestinoId">
-                    <option value="">-- Escolher Destino --</option>
-                </select>
-                <span asp-validation-for="DestinoId" class="text-danger" />
+                <select asp-for="DestinoId" class="form-control" asp-items="ViewBag.DestinoId"></select>
+                <span asp-validation-for="DestinoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Doença</label>
-                <select asp-for="DoencaId" class="form-control" asp-items="ViewBag.DoencaId">
-                    <option value="">-- Escolher Doença --</option>
-                </select>
-                <span asp-validation-for="DoencaId" class="text-danger" />
+                <select asp-for="DoencaId" class="form-control" asp-items="ViewBag.DoencaId"></select>
+                <span asp-validation-for="DoencaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Data</label>
@@ -41,7 +38,7 @@
                 <span asp-validation-for="Gravidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
+                <input type="submit" value="Gravar" class="btn btn-primary" />
             </div>
         </form>
     </div>

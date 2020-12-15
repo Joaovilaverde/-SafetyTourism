@@ -10,17 +10,16 @@ using SafetyTourism.Models;
 
 namespace SafetyTourism.Controllers
 {
-    public class AfectadosPorController : Controller
+    public class SurtosController : Controller
     {
-        private readonly SafetyContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public AfectadosPorController(SafetyContext context)
+        public SurtosController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: AfectadosPor
-
+        // GET: Surtos
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -40,51 +39,51 @@ namespace SafetyTourism.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
-            var afectados = from a in _context.Afectados.Include(a => a.Destino).Include(a => a.Doenca)
+            var surtos = from a in _context.Surtos.Include(a => a.Destino).Include(a => a.Doenca)
                             select a;
             if (!String.IsNullOrEmpty(searchString))
             {
-                afectados = afectados.Where(a => a.Destino.Nome.Contains(searchString)
+                surtos = surtos.Where(a => a.Destino.Nome.Contains(searchString)
                                        || a.Doenca.Nome.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "destinoId_desc":
-                    afectados = afectados.OrderByDescending(a => a.Destino.Nome);
+                    surtos = surtos.OrderByDescending(a => a.Destino.Nome);
                     break;
                 case "DoencaId":
-                    afectados = afectados.OrderBy(a => a.Doenca.Nome);
+                    surtos = surtos.OrderBy(a => a.Doenca.Nome);
                     break;
                 case "doencaId_desc":
-                    afectados = afectados.OrderByDescending(a => a.Doenca.Nome);
+                    surtos = surtos.OrderByDescending(a => a.Doenca.Nome);
                     break;
                 case "Data":
-                    afectados = afectados.OrderBy(a => a.Data);
+                    surtos = surtos.OrderBy(a => a.Data);
                     break;
                 case "data_desc":
-                    afectados = afectados.OrderByDescending(a => a.Data);
+                    surtos = surtos.OrderByDescending(a => a.Data);
                     break;
                 case "InfectadosPor100k":
-                    afectados = afectados.OrderBy(a => a.InfectadosPor100k);
+                    surtos = surtos.OrderBy(a => a.InfectadosPor100k);
                     break;
                 case "infectados_desc":
-                    afectados = afectados.OrderByDescending(a => a.InfectadosPor100k);
+                    surtos = surtos.OrderByDescending(a => a.InfectadosPor100k);
                     break;
                 case "Gravidade":
-                    afectados = afectados.OrderBy(a => a.Gravidade);
+                    surtos = surtos.OrderBy(a => a.Gravidade);
                     break;
                 case "gravidade_desc":
-                    afectados = afectados.OrderByDescending(a => a.Gravidade);
+                    surtos = surtos.OrderByDescending(a => a.Gravidade);
                     break;
                 default:
-                    afectados = afectados.OrderBy(a => a.Destino.Nome);
+                    surtos = surtos.OrderBy(a => a.Destino.Nome);
                     break;
             }
             int pageSize = 10;
-            return View(await PaginatedList<AfectadoPor>.CreateAsync(afectados.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Surto>.CreateAsync(surtos.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: AfectadosPor/Details/5
+        // GET: Surtos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -92,45 +91,45 @@ namespace SafetyTourism.Controllers
                 return NotFound();
             }
 
-            var afectadoPor = await _context.Afectados
-                .Include(a => a.Destino)
-                .Include(a => a.Doenca)
-                .FirstOrDefaultAsync(m => m.AfectadoPorId == id);
-            if (afectadoPor == null)
+            var surto = await _context.Surtos
+                .Include(s => s.Destino)
+                .Include(s => s.Doenca)
+                .FirstOrDefaultAsync(m => m.SurtoId == id);
+            if (surto == null)
             {
                 return NotFound();
             }
 
-            return View(afectadoPor);
+            return View(surto);
         }
 
-        // GET: AfectadosPor/Create
+        // GET: Surtos/Create
         public IActionResult Create()
         {
-            PopulateDestinosDropDownList();
-            PopulateDoencasDropDownList();
+            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId");
+            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId");
             return View();
         }
 
-        // POST: AfectadosPor/Create
+        // POST: Surtos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AfectadoPorId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] AfectadoPor afectadoPor)
+        public async Task<IActionResult> Create([Bind("SurtoId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] Surto surto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(afectadoPor);
+                _context.Add(surto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            PopulateDestinosDropDownList(afectadoPor.DestinoId);
-            PopulateDoencasDropDownList(afectadoPor.DoencaId);
-            return View(afectadoPor);
+            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", surto.DestinoId);
+            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", surto.DoencaId);
+            return View(surto);
         }
 
-        // GET: AfectadosPor/Edit/5
+        // GET: Surtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -138,24 +137,24 @@ namespace SafetyTourism.Controllers
                 return NotFound();
             }
 
-            var afectadoPor = await _context.Afectados.FindAsync(id);
-            if (afectadoPor == null)
+            var surto = await _context.Surtos.FindAsync(id);
+            if (surto == null)
             {
                 return NotFound();
             }
-            PopulateDestinosDropDownList(afectadoPor.DestinoId);
-            PopulateDoencasDropDownList(afectadoPor.DoencaId);
-            return View(afectadoPor);
+            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", surto.DestinoId);
+            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", surto.DoencaId);
+            return View(surto);
         }
 
-        // POST: AfectadosPor/Edit/5
+        // POST: Surtos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AfectadoPorId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] AfectadoPor afectadoPor)
+        public async Task<IActionResult> Edit(int id, [Bind("SurtoId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] Surto surto)
         {
-            if (id != afectadoPor.AfectadoPorId)
+            if (id != surto.SurtoId)
             {
                 return NotFound();
             }
@@ -164,12 +163,12 @@ namespace SafetyTourism.Controllers
             {
                 try
                 {
-                    _context.Update(afectadoPor);
+                    _context.Update(surto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AfectadoPorExists(afectadoPor.AfectadoPorId))
+                    if (!SurtoExists(surto.SurtoId))
                     {
                         return NotFound();
                     }
@@ -180,12 +179,12 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateDestinosDropDownList(afectadoPor.DestinoId);
-            PopulateDoencasDropDownList(afectadoPor.DoencaId);
-            return View(afectadoPor);
+            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", surto.DestinoId);
+            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", surto.DoencaId);
+            return View(surto);
         }
 
-        // GET: AfectadosPor/Delete/5
+        // GET: Surtos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -193,34 +192,33 @@ namespace SafetyTourism.Controllers
                 return NotFound();
             }
 
-            var afectadoPor = await _context.Afectados
-                .Include(a => a.Destino)
-                .Include(a => a.Doenca)
-                .FirstOrDefaultAsync(m => m.AfectadoPorId == id);
-            if (afectadoPor == null)
+            var surto = await _context.Surtos
+                .Include(s => s.Destino)
+                .Include(s => s.Doenca)
+                .FirstOrDefaultAsync(m => m.SurtoId == id);
+            if (surto == null)
             {
                 return NotFound();
             }
 
-            return View(afectadoPor);
+            return View(surto);
         }
 
-        // POST: AfectadosPor/Delete/5
+        // POST: Surtos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var afectadoPor = await _context.Afectados.FindAsync(id);
-            _context.Afectados.Remove(afectadoPor);
+            var surto = await _context.Surtos.FindAsync(id);
+            _context.Surtos.Remove(surto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AfectadoPorExists(int id)
+        private bool SurtoExists(int id)
         {
-            return _context.Afectados.Any(e => e.AfectadoPorId == id);
+            return _context.Surtos.Any(e => e.SurtoId == id);
         }
-
         private void PopulateDestinosDropDownList(object selectedDestino = null)
         {
             var destinosQuery = from d in _context.Destinos
