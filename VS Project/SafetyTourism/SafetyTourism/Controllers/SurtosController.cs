@@ -40,7 +40,7 @@ namespace SafetyTourism.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             var surtos = from a in _context.Surtos.Include(a => a.Destino).Include(a => a.Doenca)
-                            select a;
+                         select a;
             if (!String.IsNullOrEmpty(searchString))
             {
                 surtos = surtos.Where(a => a.Destino.Nome.Contains(searchString)
@@ -106,8 +106,8 @@ namespace SafetyTourism.Controllers
         // GET: Surtos/Create
         public IActionResult Create()
         {
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId");
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId");
+            PopulateDestinosDropDownList();
+            PopulateDoencasDropDownList();
             return View();
         }
 
@@ -124,8 +124,8 @@ namespace SafetyTourism.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", surto.DestinoId);
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", surto.DoencaId);
+            PopulateDestinosDropDownList(surto.Destino.Nome);
+            PopulateDoencasDropDownList(surto.Doenca.Nome);
             return View(surto);
         }
 
@@ -142,8 +142,8 @@ namespace SafetyTourism.Controllers
             {
                 return NotFound();
             }
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", surto.DestinoId);
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", surto.DoencaId);
+            PopulateDestinosDropDownList(surto.Destino.Nome);
+            PopulateDoencasDropDownList(surto.Doenca.Nome);
             return View(surto);
         }
 
@@ -179,8 +179,8 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DestinoId"] = new SelectList(_context.Destinos, "DestinoId", "DestinoId", surto.DestinoId);
-            ViewData["DoencaId"] = new SelectList(_context.Doencas, "DoencaId", "DoencaId", surto.DoencaId);
+            PopulateDestinosDropDownList(surto.Destino.Nome);
+            PopulateDoencasDropDownList(surto.Doenca.Nome);
             return View(surto);
         }
 
