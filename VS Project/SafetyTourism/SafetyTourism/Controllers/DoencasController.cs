@@ -20,10 +20,39 @@ namespace SafetyTourism.Controllers
         }
 
         // GET: Doencas
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            var safetyContext = _context.Doencas.Include(d => d.Recomendacao);
-            return View(await safetyContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NomeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var doencas = from d in _context.Doencas
+            select d;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                doencas = doencas.Where(d => d.Nome.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "nome_desc":
+                    doencas = doencas.OrderByDescending(d => d.Nome);
+                    break;
+                default:
+                    doencas = doencas.OrderBy(d => d.Nome);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Doenca>.CreateAsync(doencas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Doencas/Details/5
@@ -35,7 +64,6 @@ namespace SafetyTourism.Controllers
             }
 
             var doenca = await _context.Doencas
-                .Include(d => d.Recomendacao)
                 .FirstOrDefaultAsync(m => m.DoencaId == id);
             if (doenca == null)
             {
@@ -49,7 +77,6 @@ namespace SafetyTourism.Controllers
         public IActionResult Create()
         {
             //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId");
-            PopulateRecomendacaoDropDownList();
             return View();
         }
 
@@ -58,7 +85,7 @@ namespace SafetyTourism.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoencaId,Nome,Descricao,RecomendacaoId")] Doenca doenca)
+        public async Task<IActionResult> Create([Bind("DoencaId,Nome,Descricao,Recomendacao")] Doenca doenca)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +94,6 @@ namespace SafetyTourism.Controllers
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
-            PopulateRecomendacaoDropDownList(doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -85,7 +111,6 @@ namespace SafetyTourism.Controllers
                 return NotFound();
             }
             //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
-            PopulateRecomendacaoDropDownList(doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -94,7 +119,7 @@ namespace SafetyTourism.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoencaId,Nome,Descricao,RecomendacaoId")] Doenca doenca)
+        public async Task<IActionResult> Edit(int id, [Bind("DoencaId,Nome,Descricao,Recomendacao")] Doenca doenca)
         {
             if (id != doenca.DoencaId)
             {
@@ -122,7 +147,6 @@ namespace SafetyTourism.Controllers
                 return RedirectToAction(nameof(Index));
             }
             //ViewData["RecomendacaoId"] = new SelectList(_context.Recomendacoes, "RecomendacaoId", "RecomendacaoId", doenca.RecomendacaoId);
-            PopulateRecomendacaoDropDownList(doenca.RecomendacaoId);
             return View(doenca);
         }
 
@@ -135,7 +159,6 @@ namespace SafetyTourism.Controllers
             }
 
             var doenca = await _context.Doencas
-                .Include(d => d.Recomendacao)
                 .FirstOrDefaultAsync(m => m.DoencaId == id);
             if (doenca == null)
             {
@@ -159,13 +182,6 @@ namespace SafetyTourism.Controllers
         private bool DoencaExists(int id)
         {
             return _context.Doencas.Any(e => e.DoencaId == id);
-        }
-        private void PopulateRecomendacaoDropDownList(object selectedRecomendacao = null)
-        {
-            var recomendacaoQuery = from r in _context.Recomendacoes
-                                orderby r.Nome
-                                select r;
-            ViewBag.RecomendacaoId = new SelectList(recomendacaoQuery.AsNoTracking(), "RecomendacaoId", "Nome", selectedRecomendacao);
         }
     }
 }

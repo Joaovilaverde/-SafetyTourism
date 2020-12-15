@@ -20,11 +20,6 @@ namespace SafetyTourism.Controllers
         }
 
         // GET: AfectadosPor
-        /*public async Task<IActionResult> Index()
-        {
-            var safetyContext = _context.Afectados.Include(a => a.Destino).Include(a => a.Doenca);
-            return View(await safetyContext.ToListAsync());
-        }*/
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {

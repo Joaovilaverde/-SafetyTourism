@@ -20,9 +20,39 @@ namespace SafetyTourism.Controllers
         }
 
         // GET: Destinos
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.Destinos.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NomeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var destinos = from d in _context.Destinos
+                            select d;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                destinos = destinos.Where(d => d.Nome.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "nome_desc":
+                    destinos = destinos.OrderByDescending(d => d.Nome);
+                    break;
+                default:
+                    destinos = destinos.OrderBy(d => d.Nome);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Destino>.CreateAsync(destinos.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Destinos/Details/5

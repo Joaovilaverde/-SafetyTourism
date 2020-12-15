@@ -18,7 +18,6 @@ namespace SafetyTourism.Data
         public DbSet<Destino> Destinos { get; set; }
         public DbSet<Doenca> Doencas { get; set; }
         public DbSet<AfectadoPor> Afectados { get; set; }
-        public DbSet<Recomendacao> Recomendacoes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Funcionario>().ToTable("Funcionario");
@@ -26,7 +25,6 @@ namespace SafetyTourism.Data
             modelBuilder.Entity<Destino>().ToTable("Destino");
             modelBuilder.Entity<Doenca>().ToTable("Doenca");
             modelBuilder.Entity<AfectadoPor>().ToTable("AfectadoPor");
-            modelBuilder.Entity<Recomendacao>().ToTable("Recomendacao");
         }
     }
 }

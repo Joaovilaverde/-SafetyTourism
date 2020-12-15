@@ -24,10 +24,8 @@
             </div>
             <div class="form-group">
                 <label>Recomendação da OMS</label>
-                <select asp-for="RecomendacaoId" class="form-control" asp-items="ViewBag.RecomendacaoId">
-                    <option value="">-- Escolher Recomendação --</option>
-                </select>
-                <span asp-validation-for="RecomendacaoId" class="text-danger" />
+                <input asp-for="Recomendacao" class="form-control" />
+                <span asp-validation-for="Recomendacao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />

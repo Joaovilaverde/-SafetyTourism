@@ -79,29 +79,14 @@ namespace SafetyTourism.Data
             }
             context.SaveChanges();
 
-            //Preencher Recomendações
-
-            var recomendacoes = new Recomendacao[]
-            {
-            new Recomendacao{Nome="Covid-19.5", Conteudo="Lavar bem as mãos, não cuspir na boca dos outros, usar máscara, rezar aos santinhos todos para não apanhar."},
-            new Recomendacao{Nome="Hyperbeam", Conteudo="Conformar-se com a morte certa."},
-            new Recomendacao{Nome="Ingleses", Conteudo="Acabar com o pito da guia, chicken with piri-piri, fechar Nando's, isolar o Allgarve."},
-            new Recomendacao{Nome="Malária", Conteudo="Tomar o comprimido quando começar a ver turvo e amarelado."},
-            };
-            foreach (Recomendacao r in recomendacoes)
-            {
-                context.Recomendacoes.Add(r);
-            }
-            context.SaveChanges();
-
             //Preencher Doenças
 
             var doencas = new Doenca[]
             {
-            new Doenca{Nome="Covid-19.5", Descricao="É uma doença respiratória causada pela infeção com o coronavírus da síndrome respiratória aguda grave 2 (SARS-CoV-2).", RecomendacaoId = recomendacoes.Single( s => s.Nome == "Covid-19.5").RecomendacaoId},
-            new Doenca{Nome="Hyperbeam", Descricao="Darth Vader's personal toy.", RecomendacaoId = recomendacoes.Single( s => s.Nome == "Hyperbeam").RecomendacaoId},
-            new Doenca{Nome="Ingleses", Descricao="Homo Sapiens Sapiens infectados com inglesisse, viciados em chicken with piri-piri.", RecomendacaoId = recomendacoes.Single( s => s.Nome == "Ingleses").RecomendacaoId},
-            new Doenca{Nome="Malária", Descricao="Malária é uma doença infecciosa transmitida por mosquitos e causada por protozoários parasitários do género Plasmodium.", RecomendacaoId = recomendacoes.Single( s => s.Nome == "Malária").RecomendacaoId},
+            new Doenca{Nome="Covid-19.5", Descricao="É uma doença respiratória causada pela infeção com o coronavírus da síndrome respiratória aguda grave 2 (SARS-CoV-2).", Recomendacao = "Lavar bem as mãos, não cuspir na boca dos outros, usar máscara, rezar aos santinhos todos para não apanhar."},
+            new Doenca{Nome="Hyperbeam", Descricao="Darth Vader's personal toy.", Recomendacao = "Conformar-se com a morte certa."},
+            new Doenca{Nome="Ingleses", Descricao="Homo Sapiens Sapiens infectados com inglesisse, viciados em chicken with piri-piri.", Recomendacao = "Acabar com o pito da guia, chicken with piri-piri, fechar Nando's, isolar o Allgarve."},
+            new Doenca{Nome="Malária", Descricao="Malária é uma doença infecciosa transmitida por mosquitos e causada por protozoários parasitários do género Plasmodium.", Recomendacao = "Tomar o comprimido quando começar a ver turvo e amarelado."},
             };
             foreach (Doenca d in doencas)
             {
