@@ -64,6 +64,9 @@ namespace SafetyTourism.Controllers
             }
 
             var destino = await _context.Destinos
+                .Include(s => s.Surtos)
+                .ThenInclude(e => e.Doenca)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.DestinoId == id);
             if (destino == null)
             {

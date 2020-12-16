@@ -18,8 +18,8 @@ namespace SafetyTourism.Data
         }
         public static async Task SeedAdministradorAsync(UserManager<Utilizador> userManager, RoleManager<IdentityRole> roleManager)
         {
-            //Seed Default User
-            var defaultUser = new Utilizador
+            //Seed Administrador
+            var administrador = new Utilizador
             {
                 UserName = "administrador",
                 Email = "administrador@upskill.pt",
@@ -28,17 +28,33 @@ namespace SafetyTourism.Data
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
-            if (userManager.Users.All(u => u.Id != defaultUser.Id))
+            if (userManager.Users.All(u => u.Id != administrador.Id))
             {
-                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                var user = await userManager.FindByEmailAsync(administrador.Email);
                 if (user == null)
                 {
-                    await userManager.CreateAsync(defaultUser, "123Pa$$word");
-                    await userManager.AddToRoleAsync(defaultUser, Enums.Roles.Visitante.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Enums.Roles.Funcionario.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Enums.Roles.Administrador.ToString());
+                    await userManager.CreateAsync(administrador, "123Pa$$word");
+                    await userManager.AddToRoleAsync(administrador, Enums.Roles.Administrador.ToString());
                 }
-
+            }
+            //Seed Funcionario
+            var funcionario = new Utilizador
+            {
+                UserName = "funcionario",
+                Email = "funcionario@upskill.pt",
+                FirstName = "Manel",
+                LastName = "dos PCs",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+            };
+            if (userManager.Users.All(u => u.Id != funcionario.Id))
+            {
+                var user = await userManager.FindByEmailAsync(funcionario.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(funcionario, "123Pa$$word");
+                    await userManager.AddToRoleAsync(funcionario, Enums.Roles.Funcionario.ToString());
+                }
             }
         }
         public static void Initialize(ApplicationDbContext context)
