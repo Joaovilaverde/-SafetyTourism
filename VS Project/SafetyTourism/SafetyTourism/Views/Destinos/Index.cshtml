@@ -7,7 +7,12 @@
 <h1>Destinos</h1>
 
 <p>
-    <a asp-action="Create">Criar novo destino</a>
+    @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+    {
+        <div>
+            <a asp-action="Create">Criar novo destino</a>
+        </div>
+    }
 </p>
 
 <form asp-action="Index" method="get">
@@ -37,9 +42,20 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.DestinoId">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.DestinoId">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.DestinoId">Apagar</a>
+                    @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                    {
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@item.DestinoId">Editar</a> |
+                            <a asp-action="Delete" asp-route-id="@item.DestinoId">Apagar</a> |
+                            <a asp-action="Details" asp-route-id="@item.DestinoId">Detalhes</a>
+                        </div>
+                    }
+                    @if (User.IsInRole("Visitante"))
+                    {
+                        <div>
+                            <a asp-action="Details" asp-route-id="@item.DestinoId">Detalhes</a>
+                        </div>
+                    }
                 </td>
             </tr>
         }

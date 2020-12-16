@@ -7,7 +7,12 @@
 <h1>Surtos</h1>
 
 <p>
-    <a asp-action="Create">Criar novo</a>
+    @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+    {
+    <div>
+        <a asp-action="Create">Criar novo</a>
+    </div>
+    }
 </p>
 
 <form asp-action="Index" method="get">
@@ -61,9 +66,20 @@
                     @Html.DisplayFor(modelItem => item.InfectadosPor100k)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.SurtoId">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.SurtoId">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.SurtoId">Apagar</a>
+                    @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                    {
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@item.SurtoId">Editar</a> |
+                            <a asp-action="Delete" asp-route-id="@item.SurtoId">Apagar</a> |
+                            <a asp-action="Details" asp-route-id="@item.SurtoId">Detalhes</a>
+                        </div>
+                    }
+                    @if (User.IsInRole("Visitante"))
+                    {
+                        <div>
+                            <a asp-action="Details" asp-route-id="@item.SurtoId">Detalhes</a>
+                        </div>
+                    }
                 </td>
             </tr>
         }
