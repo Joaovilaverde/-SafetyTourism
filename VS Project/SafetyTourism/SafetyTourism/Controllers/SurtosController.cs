@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -104,6 +105,7 @@ namespace SafetyTourism.Controllers
         }
 
         // GET: Surtos/Create
+        [Authorize(Roles = "Funcionario,Administrador")]
         public IActionResult Create()
         {
             PopulateDestinosDropDownList();
@@ -116,6 +118,7 @@ namespace SafetyTourism.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Create([Bind("SurtoId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] Surto surto)
         {
             if (ModelState.IsValid)
@@ -124,12 +127,13 @@ namespace SafetyTourism.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            PopulateDestinosDropDownList(surto.Destino.Nome);
-            PopulateDoencasDropDownList(surto.Doenca.Nome);
+            PopulateDestinosDropDownList(surto.DestinoId);
+            PopulateDoencasDropDownList(surto.DoencaId);
             return View(surto);
         }
 
         // GET: Surtos/Edit/5
+        [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -142,8 +146,8 @@ namespace SafetyTourism.Controllers
             {
                 return NotFound();
             }
-            PopulateDestinosDropDownList(surto.Destino.Nome);
-            PopulateDoencasDropDownList(surto.Doenca.Nome);
+            PopulateDestinosDropDownList(surto.DestinoId);
+            PopulateDoencasDropDownList(surto.DoencaId);
             return View(surto);
         }
 
@@ -152,6 +156,7 @@ namespace SafetyTourism.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Edit(int id, [Bind("SurtoId,DestinoId,DoencaId,Data,InfectadosPor100k,Gravidade")] Surto surto)
         {
             if (id != surto.SurtoId)
@@ -179,12 +184,13 @@ namespace SafetyTourism.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateDestinosDropDownList(surto.Destino.Nome);
-            PopulateDoencasDropDownList(surto.Doenca.Nome);
+            PopulateDestinosDropDownList(surto.DestinoId);
+            PopulateDoencasDropDownList(surto.DoencaId);
             return View(surto);
         }
 
         // GET: Surtos/Delete/5
+        [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -207,6 +213,7 @@ namespace SafetyTourism.Controllers
         // POST: Surtos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var surto = await _context.Surtos.FindAsync(id);
