@@ -41,20 +41,26 @@ namespace OMS_API.Controllers
 
             return surto;
         }
-        // GET: api/surtos/virus/{Id}
-        [Route("~/api/surtos/Virus/{Id}")]
+
+        [Route("~/api/surtos/virus/{Id}")]
         public IQueryable<Surto> GetVirusById(long Id)
         {
-            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona)
-                .Where(b => b.VirusId == Id && b.DataFim == null);
+            return _context.Surtos.Include(s => s.Virus).Include(s => s.Zona).Where(s => s.VirusId == Id && s.DataFim == null);
         }
-        // GET: api/Virus/{Id}/Surtos
-        [Route("~/api/Virus/{Id}/Surtos")]
+
+        [Route("~/api/virus/{Id}/surtos")]
         public IQueryable<Surto> GetSurtosById(long Id)
         {
-            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona)
-                .Where(b => b.VirusId == Id);
+            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona).Where(b => b.VirusId == Id);
         }
+
+        [Route("~/api/paises/{paisId}/surtos")]
+        public async Task<IQueryable<Surto>> GetSurtoByPaisAsync(string paisId)
+        {
+            Pais pais = await _context.Paises.FindAsync(paisId);
+            return _context.Surtos.Include(s => s.VirusId).Include(s => s.ZonaId).Where(s => s.ZonaId == pais.ZonaId);
+        }
+
 
         // PUT: api/Surtos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

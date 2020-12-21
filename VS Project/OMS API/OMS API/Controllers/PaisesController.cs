@@ -25,7 +25,8 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pais>>> GetPais()
         {
-            return await _context.Paises.ToListAsync();
+
+            return await _context.Paises.Include(z => z.Zona).ToListAsync();
         }
 
         // GET: api/Paises/5
