@@ -42,6 +42,13 @@ namespace OMS_API.Controllers
             return recomendacao;
         }
 
+        /*[Route("~/api/paises/{Id}/recomendacoes")]
+        public IQueryable<Classificacao> GetClassifacoesByEmail(string email)
+        {
+            return _context.Classificacao.Include(c => c.UForm).Include(c => c.Formando)
+                .Where(c => c.EmailFormando == email);
+        }*/
+
         // PUT: api/Recomendacoes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
