@@ -10,7 +10,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    [Route("api/Virus")]
+    [Route("api/virus")]
     [ApiController]
     public class VirusController : ControllerBase
     {
