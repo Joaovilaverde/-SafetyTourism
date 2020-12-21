@@ -21,5 +21,7 @@ namespace OMS_API.Data
         public DbSet<OMS_API.Models.Zona> Zona { get; set; }
 
         public DbSet<OMS_API.Models.Pais> Pais { get; set; }
+
+        public DbSet<OMS_API.Models.Recomendacao> Recomendacao { get; set; }
     }
 }
