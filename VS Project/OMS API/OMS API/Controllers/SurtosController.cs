@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OMS_API.Data;
 using OMS_API.Models;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace OMS_API.Controllers
 {
@@ -95,22 +96,36 @@ namespace OMS_API.Controllers
 
             return NoContent();
         }
-        /*
-        // PATCH: Alterar a data de fim do surto
-        [Route("~/api/surtos/{zonaId}/virusId")]
-        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<Surto> patchEntity)
-        {
-            var entity = _context.Surtos.Find(id);
 
-            if (entity == null)
+        // PATCH: Alterar a data de fim do surto
+        [HttpPatch("~/api/surtos/{zonaId}/{virusId}")]
+        public async Task<ActionResult> Patch(string zonaId, long virusId, [FromBody] JsonPatchDocument<Surto> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest();
+            }
+
+            var surto = await _context.Surtos.FirstOrDefaultAsync(s => s.ZonaId == zonaId && s.VirusId == virusId);
+
+            if (surto == null)
             {
                 return NotFound();
             }
 
-            patchEntity.ApplyTo(entity, ModelState); // Must have Microsoft.AspNetCore.Mvc.NewtonsoftJson installed
+            patchDoc.ApplyTo(surto, ModelState);
 
-            return Ok(entity);
-        }*/
+            var isValid = TryValidateModel(surto);
+
+            if (!isValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         // POST: api/Surtos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
