@@ -8,9 +8,9 @@ namespace OMS_API.Models
 {
     public class Pais
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string Nome { get; set; }
-        public long ZonaId { get; set; }
+        public string ZonaId { get; set; }
         [ForeignKey("ZonaId")]
         public Zona Zona { get; set; }
 
