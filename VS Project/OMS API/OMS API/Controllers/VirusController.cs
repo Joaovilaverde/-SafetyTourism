@@ -10,7 +10,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Virus")]
     [ApiController]
     public class VirusController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace OMS_API.Controllers
             return await _context.Virus.ToListAsync();
         }
 
-        // GET: api/Virus/5
+        // GET: api/surtos/virus/{Id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Virus>> GetVirus(long id)
         {
