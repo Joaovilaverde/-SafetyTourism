@@ -25,14 +25,14 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pais>>> GetPais()
         {
-            return await _context.Pais.ToListAsync();
+            return await _context.Paises.ToListAsync();
         }
 
         // GET: api/Paises/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Pais>> GetPais(string id)
         {
-            var pais = await _context.Pais.FindAsync(id);
+            var pais = await _context.Paises.FindAsync(id);
 
             if (pais == null)
             {
@@ -78,7 +78,7 @@ namespace OMS_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Pais>> PostPais(Pais pais)
         {
-            _context.Pais.Add(pais);
+            _context.Paises.Add(pais);
             try
             {
                 await _context.SaveChangesAsync();
@@ -102,13 +102,13 @@ namespace OMS_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePais(string id)
         {
-            var pais = await _context.Pais.FindAsync(id);
+            var pais = await _context.Paises.FindAsync(id);
             if (pais == null)
             {
                 return NotFound();
             }
 
-            _context.Pais.Remove(pais);
+            _context.Paises.Remove(pais);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -116,7 +116,7 @@ namespace OMS_API.Controllers
 
         private bool PaisExists(string id)
         {
-            return _context.Pais.Any(e => e.Id == id);
+            return _context.Paises.Any(e => e.Id == id);
         }
     }
 }

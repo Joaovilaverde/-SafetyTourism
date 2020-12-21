@@ -14,18 +14,18 @@ namespace OMS_API.Data
         {
         }
 
-        public DbSet<OMS_API.Models.Surto> Surto { get; set; }
+        public DbSet<OMS_API.Models.Surto> Surtos { get; set; }
         public DbSet<OMS_API.Models.Virus> Virus { get; set; }
-        public DbSet<OMS_API.Models.Zona> Zona { get; set; }
-        public DbSet<OMS_API.Models.Pais> Pais { get; set; }
-        public DbSet<OMS_API.Models.Recomendacao> Recomendacao { get; set; }
+        public DbSet<OMS_API.Models.Zona> Zonas { get; set; }
+        public DbSet<OMS_API.Models.Pais> Paises { get; set; }
+        public DbSet<OMS_API.Models.Recomendacao> Recomendacoes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Surto>().ToTable("Surto");
+            modelBuilder.Entity<Surto>().ToTable("Surtos");
             modelBuilder.Entity<Virus>().ToTable("Virus");
-            modelBuilder.Entity<Zona>().ToTable("Zona");
-            modelBuilder.Entity<Pais>().ToTable("Pais");
-            modelBuilder.Entity<Recomendacao>().ToTable("Recomendacao");
+            modelBuilder.Entity<Zona>().ToTable("Zonas");
+            modelBuilder.Entity<Pais>().ToTable("Paises");
+            modelBuilder.Entity<Recomendacao>().ToTable("Recomendacoes");
         }
     }
 }

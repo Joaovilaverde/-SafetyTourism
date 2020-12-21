@@ -25,14 +25,14 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Recomendacao>>> GetRecomendacao()
         {
-            return await _context.Recomendacao.ToListAsync();
+            return await _context.Recomendacoes.ToListAsync();
         }
 
         // GET: api/Recomendacoes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Recomendacao>> GetRecomendacao(long id)
         {
-            var recomendacao = await _context.Recomendacao.FindAsync(id);
+            var recomendacao = await _context.Recomendacoes.FindAsync(id);
 
             if (recomendacao == null)
             {
@@ -45,8 +45,8 @@ namespace OMS_API.Controllers
         [Route("~/api/paises/{paisId}/recomendacoes")]
         public async Task<IQueryable<Recomendacao>> GetRecomendacaoByPaisAsync(string paisId)
         {
-            Pais pais = await _context.Pais.FindAsync(paisId);
-            return _context.Recomendacao.Include(r => r.Zona).Where(c => c.ZonaId == pais.ZonaId);
+            Pais pais = await _context.Paises.FindAsync(paisId);
+            return _context.Recomendacoes.Include(r => r.Zona).Where(c => c.ZonaId == pais.ZonaId);
         }
 
         // PUT: api/Recomendacoes/5
@@ -85,7 +85,7 @@ namespace OMS_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Recomendacao>> PostRecomendacao(Recomendacao recomendacao)
         {
-            _context.Recomendacao.Add(recomendacao);
+            _context.Recomendacoes.Add(recomendacao);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRecomendacao", new { id = recomendacao.Id }, recomendacao);
@@ -95,13 +95,13 @@ namespace OMS_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecomendacao(long id)
         {
-            var recomendacao = await _context.Recomendacao.FindAsync(id);
+            var recomendacao = await _context.Recomendacoes.FindAsync(id);
             if (recomendacao == null)
             {
                 return NotFound();
             }
 
-            _context.Recomendacao.Remove(recomendacao);
+            _context.Recomendacoes.Remove(recomendacao);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -109,7 +109,7 @@ namespace OMS_API.Controllers
 
         private bool RecomendacaoExists(long id)
         {
-            return _context.Recomendacao.Any(e => e.Id == id);
+            return _context.Recomendacoes.Any(e => e.Id == id);
         }
     }
 }

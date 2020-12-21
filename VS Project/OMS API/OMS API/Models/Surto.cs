@@ -9,7 +9,7 @@ namespace OMS_API.Models
 {
     public class Surto
     {
-        public long SurtoId { get; set; }
+        public long Id { get; set; }
         public long VirusId { get; set; }
         [ForeignKey ("VirusId")]
         public Virus Virus { get; set; }

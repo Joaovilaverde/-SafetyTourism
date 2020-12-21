@@ -34,7 +34,7 @@ namespace OMS_API.Migrations
 
                     b.HasIndex("ZonaId");
 
-                    b.ToTable("Pais");
+                    b.ToTable("Paises");
                 });
 
             modelBuilder.Entity("OMS_API.Models.Recomendacao", b =>
@@ -60,12 +60,12 @@ namespace OMS_API.Migrations
 
                     b.HasIndex("ZonaId");
 
-                    b.ToTable("Recomendacao");
+                    b.ToTable("Recomendacoes");
                 });
 
             modelBuilder.Entity("OMS_API.Models.Surto", b =>
                 {
-                    b.Property<long>("SurtoId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
@@ -73,7 +73,7 @@ namespace OMS_API.Migrations
                     b.Property<DateTime>("DataDetecao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataFim")
+                    b.Property<DateTime?>("DataFim")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("VirusId")
@@ -82,13 +82,13 @@ namespace OMS_API.Migrations
                     b.Property<string>("ZonaId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("SurtoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("VirusId");
 
                     b.HasIndex("ZonaId");
 
-                    b.ToTable("Surto");
+                    b.ToTable("Surtos");
                 });
 
             modelBuilder.Entity("OMS_API.Models.Virus", b =>
@@ -98,7 +98,7 @@ namespace OMS_API.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<string>("NomeVirus")
+                    b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -116,7 +116,7 @@ namespace OMS_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Zona");
+                    b.ToTable("Zonas");
                 });
 
             modelBuilder.Entity("OMS_API.Models.Pais", b =>

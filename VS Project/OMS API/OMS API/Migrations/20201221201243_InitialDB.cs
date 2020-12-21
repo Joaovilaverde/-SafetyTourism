@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OMS_API.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace OMS_API.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeVirus = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -21,7 +21,7 @@ namespace OMS_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Zona",
+                name: "Zonas",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -29,11 +29,11 @@ namespace OMS_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Zona", x => x.Id);
+                    table.PrimaryKey("PK_Zonas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pais",
+                name: "Paises",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -42,17 +42,17 @@ namespace OMS_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pais", x => x.Id);
+                    table.PrimaryKey("PK_Paises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pais_Zona_ZonaId",
+                        name: "FK_Paises_Zonas_ZonaId",
                         column: x => x.ZonaId,
-                        principalTable: "Zona",
+                        principalTable: "Zonas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recomendacao",
+                name: "Recomendacoes",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -64,80 +64,80 @@ namespace OMS_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recomendacao", x => x.Id);
+                    table.PrimaryKey("PK_Recomendacoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recomendacao_Zona_ZonaId",
+                        name: "FK_Recomendacoes_Zonas_ZonaId",
                         column: x => x.ZonaId,
-                        principalTable: "Zona",
+                        principalTable: "Zonas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Surto",
+                name: "Surtos",
                 columns: table => new
                 {
-                    SurtoId = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VirusId = table.Column<long>(type: "bigint", nullable: false),
                     ZonaId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DataDetecao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Surto", x => x.SurtoId);
+                    table.PrimaryKey("PK_Surtos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Surto_Virus_VirusId",
+                        name: "FK_Surtos_Virus_VirusId",
                         column: x => x.VirusId,
                         principalTable: "Virus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Surto_Zona_ZonaId",
+                        name: "FK_Surtos_Zonas_ZonaId",
                         column: x => x.ZonaId,
-                        principalTable: "Zona",
+                        principalTable: "Zonas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pais_ZonaId",
-                table: "Pais",
+                name: "IX_Paises_ZonaId",
+                table: "Paises",
                 column: "ZonaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recomendacao_ZonaId",
-                table: "Recomendacao",
+                name: "IX_Recomendacoes_ZonaId",
+                table: "Recomendacoes",
                 column: "ZonaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Surto_VirusId",
-                table: "Surto",
+                name: "IX_Surtos_VirusId",
+                table: "Surtos",
                 column: "VirusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Surto_ZonaId",
-                table: "Surto",
+                name: "IX_Surtos_ZonaId",
+                table: "Surtos",
                 column: "ZonaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Pais");
+                name: "Paises");
 
             migrationBuilder.DropTable(
-                name: "Recomendacao");
+                name: "Recomendacoes");
 
             migrationBuilder.DropTable(
-                name: "Surto");
+                name: "Surtos");
 
             migrationBuilder.DropTable(
                 name: "Virus");
 
             migrationBuilder.DropTable(
-                name: "Zona");
+                name: "Zonas");
         }
     }
 }

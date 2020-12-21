@@ -25,14 +25,14 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Zona>>> GetZona()
         {
-            return await _context.Zona.ToListAsync();
+            return await _context.Zonas.ToListAsync();
         }
 
         // GET: api/zonas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Zona>> GetZona(string id)
         {
-            var zona = await _context.Zona.FindAsync(id);
+            var zona = await _context.Zonas.FindAsync(id);
 
             if (zona == null)
             {
@@ -78,7 +78,7 @@ namespace OMS_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Zona>> PostZona(Zona zona)
         {
-            _context.Zona.Add(zona);
+            _context.Zonas.Add(zona);
             try
             {
                 await _context.SaveChangesAsync();
@@ -102,13 +102,13 @@ namespace OMS_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteZona(string id)
         {
-            var zona = await _context.Zona.FindAsync(id);
+            var zona = await _context.Zonas.FindAsync(id);
             if (zona == null)
             {
                 return NotFound();
             }
 
-            _context.Zona.Remove(zona);
+            _context.Zonas.Remove(zona);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -116,7 +116,7 @@ namespace OMS_API.Controllers
 
         private bool ZonaExists(string id)
         {
-            return _context.Zona.Any(e => e.Id == id);
+            return _context.Zonas.Any(e => e.Id == id);
         }
     }
 }

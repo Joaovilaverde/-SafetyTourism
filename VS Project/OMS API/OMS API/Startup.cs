@@ -29,15 +29,8 @@ namespace OMS_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OMS_API", Version = "v1" });
-            });
-
-            services.AddDbContext<OMSContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("OMSContext")));
+            services.AddDbContext<OMSContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("OMSContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,8 +39,6 @@ namespace OMS_API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OMS_API v1"));
             }
 
             app.UseHttpsRedirection();

@@ -25,14 +25,14 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Surto>>> GetSurto()
         {
-            return await _context.Surto.ToListAsync();
+            return await _context.Surtos.ToListAsync();
         }
 
         // GET: api/Surtos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Surto>> GetSurto(long id)
         {
-            var surto = await _context.Surto.FindAsync(id);
+            var surto = await _context.Surtos.FindAsync(id);
 
             if (surto == null)
             {
@@ -45,14 +45,14 @@ namespace OMS_API.Controllers
         [Route("~/api/surtos/Virus/{Id}")]
         public IQueryable<Surto> GetVirusById(long Id)
         {
-            return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
+            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona)
                 .Where(b => b.VirusId == Id && b.DataFim == null);
         }
         // GET: api/Virus/{Id}/Surtos
         [Route("~/api/Virus/{Id}/Surtos")]
         public IQueryable<Surto> GetSurtosById(long Id)
         {
-            return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
+            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona)
                 .Where(b => b.VirusId == Id);
         }
 
@@ -61,7 +61,7 @@ namespace OMS_API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSurto(long id, Surto surto)
         {
-            if (id != surto.SurtoId)
+            if (id != surto.Id)
             {
                 return BadRequest();
             }
@@ -92,23 +92,23 @@ namespace OMS_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Surto>> PostSurto(Surto surto)
         {
-            _context.Surto.Add(surto);
+            _context.Surtos.Add(surto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSurto", new { id = surto.SurtoId }, surto);
+            return CreatedAtAction("GetSurto", new { id = surto.Id }, surto);
         }
 
         // DELETE: api/Surtos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSurto(long id)
         {
-            var surto = await _context.Surto.FindAsync(id);
+            var surto = await _context.Surtos.FindAsync(id);
             if (surto == null)
             {
                 return NotFound();
             }
 
-            _context.Surto.Remove(surto);
+            _context.Surtos.Remove(surto);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -116,7 +116,7 @@ namespace OMS_API.Controllers
 
         private bool SurtoExists(long id)
         {
-            return _context.Surto.Any(e => e.SurtoId == id);
+            return _context.Surtos.Any(e => e.Id == id);
         }
     }
 }
