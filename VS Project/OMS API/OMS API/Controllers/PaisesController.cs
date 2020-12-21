@@ -10,7 +10,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/paises")]
     [ApiController]
     public class PaisesController : ControllerBase
     {
