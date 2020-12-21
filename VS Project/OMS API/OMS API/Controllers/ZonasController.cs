@@ -10,7 +10,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/zonas")]
     [ApiController]
     public class ZonasController : ControllerBase
     {
@@ -21,14 +21,14 @@ namespace OMS_API.Controllers
             _context = context;
         }
 
-        // GET: api/Zonas
+        // GET: api/zonas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Zona>>> GetZona()
         {
             return await _context.Zona.ToListAsync();
         }
 
-        // GET: api/Zonas/5
+        // GET: api/zonas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Zona>> GetZona(string id)
         {
@@ -42,7 +42,7 @@ namespace OMS_API.Controllers
             return zona;
         }
 
-        // PUT: api/Zonas/5
+        // PUT: api/zonas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutZona(string id, Zona zona)
@@ -73,7 +73,7 @@ namespace OMS_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Zonas
+        // POST: api/zonas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Zona>> PostZona(Zona zona)
@@ -98,7 +98,7 @@ namespace OMS_API.Controllers
             return CreatedAtAction("GetZona", new { id = zona.Id }, zona);
         }
 
-        // DELETE: api/Zonas/5
+        // DELETE: api/zonas/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteZona(string id)
         {
