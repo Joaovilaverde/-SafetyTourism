@@ -17,8 +17,10 @@ namespace OMS_API.Models
         [ForeignKey("ZonaId")]
         public Zona Zona { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataDetecao { get; set; }
         [DataType(DataType.Date)]
-        public DateTime DataFim { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DataFim { get; set; }
     }
 }
