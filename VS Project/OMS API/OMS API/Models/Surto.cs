@@ -21,6 +21,6 @@ namespace OMS_API.Models
         public DateTime DataDetecao { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
     }
 }
