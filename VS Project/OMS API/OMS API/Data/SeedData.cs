@@ -22,7 +22,13 @@ namespace OMS_API.Data
 
                 context.Zonas.AddRange(
                     new Zona { Id = "eur", Nome = "Europa" },
-                    new Zona { Id = "afr", Nome = "África" }
+                    new Zona { Id = "asi", Nome = "Ásia" },
+                    new Zona { Id = "afr", Nome = "África" },
+                    new Zona { Id = "amn", Nome = "América do Norte" },
+                    new Zona { Id = "ams", Nome = "América do Sul" },
+                    new Zona { Id = "amc", Nome = "América Central" },
+                    new Zona { Id = "ant", Nome = "Antárctida" },
+                    new Zona { Id = "oce", Nome = "Oceânia" }
                 );
                 context.Paises.AddRange(
                     new Pais { Id = "pt", Nome = "Portugal", ZonaId = "eur" },
@@ -37,14 +43,19 @@ namespace OMS_API.Data
                 context.Virus.AddRange(
                     new Virus {Nome = "Covid" },
                     new Virus {Nome = "Pinguins" },
-                    new Virus { Nome = "Malária" }
+                    new Virus { Nome = "Americanos" },
+                    new Virus {Nome = "Malária" }
                 );
                 context.Surtos.AddRange(
-                    new Surto { VirusId = 1, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-2-12"), DataFim = DateTime.Parse("2020-4-30") },
-                    new Surto { VirusId = 2, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-2-12") },
-                    new Surto { VirusId = 1, ZonaId = "afr", DataDetecao = DateTime.Parse("2020-2-12") },
-                    new Surto { VirusId = 2, ZonaId = "afr", DataDetecao = DateTime.Parse("2020-2-12"), DataFim = DateTime.Parse("2020-4-30") },
-                    new Surto { VirusId = 3, ZonaId = "afr", DataDetecao = DateTime.Parse("2020-2-12") }
+                    new Surto {VirusId = 1, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
+                    new Surto {VirusId = 1, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
+                    new Surto {VirusId = 2, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-11-21") },
+                    new Surto {VirusId = 2, ZonaId = "ant", DataDetecao = DateTime.Parse("2020-10-09"), DataFim = DateTime.Parse("2020-11-09") },
+                    new Surto {VirusId = 2, ZonaId = "ant", DataDetecao = DateTime.Parse("2020-12-21") },
+                    new Surto {VirusId = 3, ZonaId = "oce", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
+                    new Surto {VirusId = 3, ZonaId = "amn", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
+                    new Surto {VirusId = 3, ZonaId = "ams", DataDetecao = DateTime.Parse("2020-12-20") },
+                    new Surto {VirusId = 4, ZonaId = "afr", DataDetecao = DateTime.Parse("2020-2-12") }
                 );
                 context.SaveChanges();
             }

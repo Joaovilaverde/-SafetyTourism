@@ -42,6 +42,7 @@ namespace OMS_API.Controllers
             return recomendacao;
         }
 
+        // GET: Obter as recomendações válidas para o país referido
         [Route("~/api/paises/{paisId}/recomendacoes")]
         public async Task<IQueryable<Recomendacao>> GetRecomendacaoByPaisAsync(string paisId)
         {
@@ -49,6 +50,7 @@ namespace OMS_API.Controllers
             return _context.Recomendacoes.Include(r => r.Zona).Where(c => c.ZonaId == pais.ZonaId);
         }
 
+        // PUT: Editar a nota de recomendação
         // PUT: api/Recomendacoes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

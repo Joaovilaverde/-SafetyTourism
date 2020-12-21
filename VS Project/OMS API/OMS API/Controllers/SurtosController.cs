@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OMS_API.Data;
@@ -42,18 +43,7 @@ namespace OMS_API.Controllers
             return surto;
         }
 
-        [Route("~/api/surtos/virus/{Id}")]
-        public IQueryable<Surto> GetVirusById(long Id)
-        {
-            return _context.Surtos.Include(s => s.Virus).Include(s => s.Zona).Where(s => s.VirusId == Id && s.DataFim == null);
-        }
-
-        [Route("~/api/virus/{Id}/surtos")]
-        public IQueryable<Surto> GetSurtosById(long Id)
-        {
-            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona).Where(b => b.VirusId == Id);
-        }
-
+        // GET: Obter os surtos ativos para o país referido
         [Route("~/api/paises/{paisId}/surtos")]
         public async Task<IQueryable<Surto>> GetSurtoByPaisAsync(string paisId)
         {
@@ -61,6 +51,19 @@ namespace OMS_API.Controllers
             return _context.Surtos.Include(s => s.VirusId).Include(s => s.ZonaId).Where(s => s.ZonaId == pais.ZonaId);
         }
 
+        //GET: Obter informação sobre todos os surtos ativos associados ao vírus referido
+        [Route("~/api/surtos/virus/{Id}")]
+        public IQueryable<Surto> GetVirusById(long Id)
+        {
+            return _context.Surtos.Include(s => s.Virus).Include(s => s.Zona).Where(s => s.VirusId == Id && s.DataFim == null);
+        }
+
+        //GET: Obter informação todos os surtos ocorridos associados ao vírus referido
+        [Route("~/api/virus/{Id}/surtos")]
+        public IQueryable<Surto> GetSurtosById(long Id)
+        {
+            return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona).Where(b => b.VirusId == Id);
+        }
 
         // PUT: api/Surtos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -92,6 +95,22 @@ namespace OMS_API.Controllers
 
             return NoContent();
         }
+        /*
+        // PATCH: Alterar a data de fim do surto
+        [Route("~/api/surtos/{zonaId}/virusId")]
+        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<Surto> patchEntity)
+        {
+            var entity = _context.Surtos.Find(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            patchEntity.ApplyTo(entity, ModelState); // Must have Microsoft.AspNetCore.Mvc.NewtonsoftJson installed
+
+            return Ok(entity);
+        }*/
 
         // POST: api/Surtos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
