@@ -15,6 +15,6 @@ namespace OMS_API.Models {
         public DateTime Data { get; set; }
 
         public long Validade { get; set; }
-        public string Conteudo { get; set; }
+        public string Informacao { get; set; }
     }
 }
