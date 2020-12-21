@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace OMS_API.Models {
     public class Recomendacao {
         public long Id { get; set; }
-        public long? ZonaId { get; set; }
+        public string ZonaId { get; set; }
 
         [ForeignKey("ZonaId")]
         public Zona Zona { get; set; }
@@ -15,5 +15,6 @@ namespace OMS_API.Models {
         public DateTime Data { get; set; }
 
         public long Validade { get; set; }
+        public string Conteudo { get; set; }
     }
 }
