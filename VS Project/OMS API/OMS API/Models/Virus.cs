@@ -7,5 +7,7 @@ namespace OMS_API.Models
 {
     public class Virus
     {
+        public long Id { get; set; }
+        public string NomeVirus { get; set; }
     }
 }
