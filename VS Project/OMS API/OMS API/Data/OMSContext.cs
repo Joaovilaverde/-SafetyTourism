@@ -9,19 +9,23 @@ namespace OMS_API.Data
 {
     public class OMSContext : DbContext
     {
-        public OMSContext (DbContextOptions<OMSContext> options)
+        public OMSContext(DbContextOptions<OMSContext> options)
             : base(options)
         {
         }
 
         public DbSet<OMS_API.Models.Surto> Surto { get; set; }
-
         public DbSet<OMS_API.Models.Virus> Virus { get; set; }
-
         public DbSet<OMS_API.Models.Zona> Zona { get; set; }
-
         public DbSet<OMS_API.Models.Pais> Pais { get; set; }
-
         public DbSet<OMS_API.Models.Recomendacao> Recomendacao { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Surto>().ToTable("Surto");
+            modelBuilder.Entity<Virus>().ToTable("Virus");
+            modelBuilder.Entity<Zona>().ToTable("Zona");
+            modelBuilder.Entity<Pais>().ToTable("Pais");
+            modelBuilder.Entity<Recomendacao>().ToTable("Recomendacao");
+        }
     }
 }
