@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace OMS_API.Models
 {
     public class Surto
     {
-        public long SurtoID { get; set; }
-        public long VirusID { get; set; }
-        [ForeignKey ("VirusID")]
+        public long SurtoId { get; set; }
+        public long VirusId { get; set; }
+        [ForeignKey ("VirusId")]
         public Virus Virus { get; set; }
-        public long ZonaID { get; set; }
-        [ForeignKey("ZonaID")]
+        public long ZonaId { get; set; }
+        [ForeignKey("ZonaId")]
         public Zona Zona { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DataDetecao { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DataFim { get; set; }
     }
 }
