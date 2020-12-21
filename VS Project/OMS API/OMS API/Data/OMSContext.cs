@@ -15,5 +15,7 @@ namespace OMS_API.Data
         }
 
         public DbSet<OMS_API.Models.Surto> Surto { get; set; }
+
+        public DbSet<OMS_API.Models.Zona> Zona { get; set; }
     }
 }

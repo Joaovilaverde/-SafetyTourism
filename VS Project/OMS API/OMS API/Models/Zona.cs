@@ -9,8 +9,8 @@ namespace OMS_API.Models
 {
     public class Zona
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
 
-        public string NomeZona { get; set; }
+        public string Nome { get; set; }
     }
 }
