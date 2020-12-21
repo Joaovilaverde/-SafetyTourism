@@ -41,20 +41,14 @@ namespace OMS_API.Controllers
 
             return surto;
         }
-        // GET: api/surtos/virus/{Id}
-        [Route("~/api/surtos/Virus/{Id}")]
-        public IQueryable<Surto> GetVirusById(long Id)
+
+            [Route("~/api/paises/{paisId}/surtos")]
+        public async Task<IQueryable<Surto>> GetSurtoByPaisAsync(string paisId)
         {
-            return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
-                .Where(b => b.VirusId == Id && b.DataFim == null);
+            Pais pais = await _context.Pais.FindAsync(paisId);
+            return _context.Surto.Include(s => s.VirusId).Include(s => s.ZonaId).Where(s => s.ZonaId == pais.ZonaId);
         }
-        // GET: api/Virus/{Id}/Surtos
-        [Route("~/api/Virus/{Id}/Surtos")]
-        public IQueryable<Surto> GetSurtosById(long Id)
-        {
-            return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
-                .Where(b => b.VirusId == Id);
-        }
+
 
         // PUT: api/Surtos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
