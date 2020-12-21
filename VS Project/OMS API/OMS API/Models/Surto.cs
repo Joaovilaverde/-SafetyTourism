@@ -19,6 +19,6 @@ namespace OMS_API.Models
         [DataType(DataType.Date)]
         public DateTime DataDetecao { get; set; }
         [DataType(DataType.Date)]
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
     }
 }

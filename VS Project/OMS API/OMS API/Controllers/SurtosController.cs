@@ -41,6 +41,13 @@ namespace OMS_API.Controllers
 
             return surto;
         }
+        // GET: api/surtos/virus/{Id}
+        [Route("~/api/surtos/Virus/{Id}")]
+        public IQueryable<Surto> GetClassificacaoByEmail(long Id)
+        {
+            return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
+                .Where(b => b.VirusId == Id && b.DataFim == null);
+        }
 
         // PUT: api/Surtos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
