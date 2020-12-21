@@ -28,7 +28,7 @@ namespace OMS_API.Controllers
             return await _context.Virus.ToListAsync();
         }
 
-        // GET: api/Virus/5
+        // GET: api/surtos/virus/{Id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Virus>> GetVirus(long id)
         {
