@@ -43,10 +43,17 @@ namespace OMS_API.Controllers
         }
         // GET: api/surtos/virus/{Id}
         [Route("~/api/surtos/Virus/{Id}")]
-        public IQueryable<Surto> GetClassificacaoByEmail(long Id)
+        public IQueryable<Surto> GetVirusById(long Id)
         {
             return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
                 .Where(b => b.VirusId == Id && b.DataFim == null);
+        }
+        // GET: api/Virus/{Id}/Surtos
+        [Route("~/api/Virus/{Id}/Surtos")]
+        public IQueryable<Surto> GetSurtosById(long Id)
+        {
+            return _context.Surto.Include(b => b.Virus).Include(b => b.Zona)
+                .Where(b => b.VirusId == Id);
         }
 
         // PUT: api/Surtos/5
