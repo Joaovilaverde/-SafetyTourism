@@ -42,12 +42,12 @@ namespace OMS_API.Controllers
             return recomendacao;
         }
 
-        /*[Route("~/api/paises/{Id}/recomendacoes")]
-        public IQueryable<Classificacao> GetClassifacoesByEmail(string email)
+        [Route("~/api/paises/{paisId}/recomendacoes")]
+        public async Task<IQueryable<Recomendacao>> GetRecomendacaoByPaisAsync(string paisId)
         {
-            return _context.Classificacao.Include(c => c.UForm).Include(c => c.Formando)
-                .Where(c => c.EmailFormando == email);
-        }*/
+            Pais pais = await _context.Pais.FindAsync(paisId);
+            return _context.Recomendacao.Include(r => r.Zona).Where(c => c.ZonaId == pais.ZonaId);
+        }
 
         // PUT: api/Recomendacoes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
