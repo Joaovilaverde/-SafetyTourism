@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 namespace OMS_API.Controllers
 {
+    [Authorize]
     [Route("api/surtos")]
     [ApiController]
     public class SurtosController : ControllerBase

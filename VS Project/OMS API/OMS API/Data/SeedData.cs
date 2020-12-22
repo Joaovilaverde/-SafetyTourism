@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OMS_API.Entities;
 using OMS_API.Models;
 
 namespace OMS_API.Data
@@ -56,6 +57,9 @@ namespace OMS_API.Data
                     new Surto {VirusId = 3, ZonaId = "amn", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
                     new Surto {VirusId = 3, ZonaId = "ams", DataDetecao = DateTime.Parse("2020-12-20") },
                     new Surto {VirusId = 4, ZonaId = "afr", DataDetecao = DateTime.Parse("2020-2-12") }
+                );
+                context.Users.AddRange(
+                    new User {FirstName = "Inês", LastName = "Oliveira",  Username = "arya", Password = "admin"}
                 );
                 context.SaveChanges();
             }

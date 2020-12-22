@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OMS_API.Models;
 using OMS_API.Data;
+using OMS_API.Helpers;
+using OMS_API.Services;
 
 namespace OMS_API
 {
@@ -31,6 +33,8 @@ namespace OMS_API
         {
             services.AddControllers().AddNewtonsoftJson();
             services.AddDbContext<OMSContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("OMSContext")));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +50,8 @@ namespace OMS_API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OMS_API.Models;
+using OMS_API.Entities;
 
 namespace OMS_API.Data
 {
@@ -19,6 +20,7 @@ namespace OMS_API.Data
         public DbSet<OMS_API.Models.Zona> Zonas { get; set; }
         public DbSet<OMS_API.Models.Pais> Paises { get; set; }
         public DbSet<OMS_API.Models.Recomendacao> Recomendacoes { get; set; }
+        public DbSet<OMS_API.Entities.User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Surto>().ToTable("Surtos");
@@ -26,6 +28,7 @@ namespace OMS_API.Data
             modelBuilder.Entity<Zona>().ToTable("Zonas");
             modelBuilder.Entity<Pais>().ToTable("Paises");
             modelBuilder.Entity<Recomendacao>().ToTable("Recomendacoes");
+            modelBuilder.Entity<User>().ToTable("Users");
         }
     }
 }
