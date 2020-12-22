@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OMS_API.Data;
+using OMS_API.Models;
 
 namespace OMS_API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -23,7 +25,12 @@ namespace OMS_API
 
                 try
                 {
-                    SeedData.Initialize(services);
+                    var context = services.GetRequiredService<OMSContext>();
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    await SeedData.SeedRolesAsync(userManager, roleManager);
+                    await SeedData.SeedAdministradorAsync(userManager, roleManager);
+                    SeedData.Initialize(context);
                 }
                 catch (Exception ex)
                 {
