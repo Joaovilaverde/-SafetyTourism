@@ -14,8 +14,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OMS_API.Models;
 using OMS_API.Data;
-using OMS_API.Helpers;
-using OMS_API.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace OMS_API
 {
@@ -33,8 +36,18 @@ namespace OMS_API
         {
             services.AddControllers().AddNewtonsoftJson();
             services.AddDbContext<OMSContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("OMSContext")));
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddScoped<IUserService, UserService>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<OMSContext>().AddDefaultTokenProviders();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"])),
+                    ClockSkew = TimeSpan.Zero
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,8 +63,6 @@ namespace OMS_API
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

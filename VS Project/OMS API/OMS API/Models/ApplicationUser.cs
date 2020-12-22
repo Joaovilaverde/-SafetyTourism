@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
-namespace OMS_API.Helpers
+namespace OMS_API.Models
 {
-    public class AppSettings
+    public class ApplicationUser : IdentityUser
     {
-        public string Secret { get; set; }
     }
 }

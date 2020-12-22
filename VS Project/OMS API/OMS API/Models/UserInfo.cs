@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace OMS_API.Models
 {
-    public class AuthenticateRequest
+    public class UserInfo
     {
-        [Required]
-        public string Username { get; set; }
-
-        [Required]
+        public string Email { get; set; }
         public string Password { get; set; }
     }
 }

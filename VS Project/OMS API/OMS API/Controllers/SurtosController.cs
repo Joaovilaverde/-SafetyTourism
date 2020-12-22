@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using OMS_API.Data;
 using OMS_API.Models;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OMS_API.Controllers
 {
