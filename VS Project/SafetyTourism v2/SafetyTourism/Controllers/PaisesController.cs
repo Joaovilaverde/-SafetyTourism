@@ -79,5 +79,29 @@ namespace SafetyTourism.Controllers
             }
             return View(paises);
         }*/
+
+        // GET: Destinos/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Pais pais;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/paises/" + id;
+                using (var response = await client.GetAsync(endpoint))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    pais = JsonConvert.DeserializeObject<Pais>(apiResponse);
+                }
+            }
+            if (pais == null)
+            {
+                return NotFound();
+            }
+            return View(pais);
+        }
     }
 }

@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ZonaId)
+                    @Html.DisplayFor(modelItem => item.Zona.Nome)
                 </td>
                 <td>
                     @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
