@@ -22,24 +22,8 @@
                             @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
                             {
                             <div>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Destinos" asp-action="Index">Destinos</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Paises" asp-action="Index">Paises</a>
                             </div>
-                            }
-                        </li>
-                        <li class="nav-item">
-                            @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
-                            {
-                            <div>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Doencas" asp-action="Index">Doenças</a>
-                            </div>
-                            }
-                        </li>
-                        <li class="nav-item">
-                            @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
-                            {
-                                <div>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Surtos" asp-action="Index">Surtos</a>
-                                </div>
                             }
                         </li>
                         <li class="nav-item">

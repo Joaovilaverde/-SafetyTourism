@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
-namespace OMS_API.Models
+namespace SafetyTourism.Models
 {
     public class Surto
     {
         public long Id { get; set; }
         public long VirusId { get; set; }
-        [ForeignKey ("VirusId")]
+        [ForeignKey("VirusId")]
         public Virus Virus { get; set; }
         public string ZonaId { get; set; }
         [ForeignKey("ZonaId")]

@@ -11,7 +11,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/paises")]
     [ApiController]
     public class PaisesController : ControllerBase
@@ -27,7 +27,6 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pais>>> GetPais()
         {
-
             return await _context.Paises.Include(z => z.Zona).ToListAsync();
         }
 

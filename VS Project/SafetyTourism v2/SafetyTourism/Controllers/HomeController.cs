@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SafetyTourism.Models;
 
@@ -12,10 +13,14 @@ namespace SafetyTourism.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configure;
+        private readonly string apiBaseUrl;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configure = configuration;
+            apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
 
         public IActionResult Index()
