@@ -10,33 +10,39 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using OMS_API.Models;
+using OMS_API.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OMS_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly OMSContext _context;
 
-        public UsuariosController(UserManager<ApplicationUser> userManager,
+        public UsersController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IConfiguration configuration)
+            IConfiguration configuration, OMSContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _context = context;
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
-        public ActionResult<string> Get()
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetUsers()
         {
-            return "Controlador UsuariosController :: WebApiUsuarios";
+            return await _context.Users.ToListAsync();
         }
 
-        [HttpPost("Criar")]
+        [HttpPost("Registar")]
         public async Task<ActionResult<UserToken>> CreateUser([FromBody] UserInfo model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -48,7 +54,7 @@ namespace OMS_API.Controllers
             }
             else
             {
-                return BadRequest("Usuário ou senha inválidos");
+                return BadRequest("User or password invalid.");
             }
         }
 
@@ -65,6 +71,22 @@ namespace OMS_API.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return BadRequest(ModelState);
             }
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> DeleteUser(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(m => m.Email == email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         private UserToken BuildToken(UserInfo userInfo)

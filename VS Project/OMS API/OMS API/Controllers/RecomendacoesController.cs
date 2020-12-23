@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
+    [Authorize]
     [Route("api/recomendacoes")]
     [ApiController]
     public class RecomendacoesController : ControllerBase
@@ -43,7 +45,7 @@ namespace OMS_API.Controllers
         }
 
         // GET: Obter as recomendações válidas para o país referido
-        [Route("~/api/paises/{paisId}/recomendacoes")]
+        [HttpGet("~/api/paises/{paisId}/recomendacoes")]
         public async Task<IQueryable<Recomendacao>> GetRecomendacaoByPaisAsync(string paisId)
         {
             Pais pais = await _context.Paises.FindAsync(paisId);

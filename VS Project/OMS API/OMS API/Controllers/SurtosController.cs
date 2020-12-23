@@ -47,7 +47,7 @@ namespace OMS_API.Controllers
         }
 
         // GET: Obter os surtos ativos para o país referido
-        [Route("~/api/paises/{paisId}/surtos")]
+        [HttpGet("~/api/paises/{paisId}/surtos")]
         public async Task<IQueryable<Surto>> GetSurtoByPaisAsync(string paisId)
         {
             Pais pais = await _context.Paises.FindAsync(paisId);
@@ -55,14 +55,14 @@ namespace OMS_API.Controllers
         }
 
         //GET: Obter informação sobre todos os surtos ativos associados ao vírus referido
-        [Route("~/api/surtos/virus/{Id}")]
+        [HttpGet("~/api/surtos/virus/{Id}")]
         public IQueryable<Surto> GetVirusById(long Id)
         {
             return _context.Surtos.Include(s => s.Virus).Include(s => s.Zona).Where(s => s.VirusId == Id && s.DataFim == null);
         }
 
         //GET: Obter informação todos os surtos ocorridos associados ao vírus referido
-        [Route("~/api/virus/{Id}/surtos")]
+        [HttpGet("~/api/virus/{Id}/surtos")]
         public IQueryable<Surto> GetSurtosById(long Id)
         {
             return _context.Surtos.Include(b => b.Virus).Include(b => b.Zona).Where(b => b.VirusId == Id);

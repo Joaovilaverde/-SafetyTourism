@@ -7,8 +7,6 @@ namespace OMS_API.Models
 {
     public enum Roles
     {
-        Administrador,
-        Funcionario,
-        Visitante
+        Administrador
     }
 }

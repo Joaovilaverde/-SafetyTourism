@@ -15,18 +15,14 @@ namespace OMS_API.Data
         {
             //Seed Roles
             await roleManager.CreateAsync(new IdentityRole(Roles.Administrador.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Funcionario.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Visitante.ToString()));
         }
         public static async Task SeedAdministradorAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             //Seed Administrador
             var administrador = new ApplicationUser
             {
-                UserName = "administrador",
-                Email = "administrador@upskill.pt",
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                UserName = "administrador@upskill.pt",
+                Email = "administrador@upskill.pt"
             };
             if (userManager.Users.All(u => u.Id != administrador.Id))
             {
@@ -40,10 +36,8 @@ namespace OMS_API.Data
             //Seed Funcionario
             var funcionario = new ApplicationUser
             {
-                UserName = "funcionario",
-                Email = "funcionario@upskill.pt",
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true
+                UserName = "funcionario@upskill.pt",
+                Email = "funcionario@upskill.pt"
             };
             if (userManager.Users.All(u => u.Id != funcionario.Id))
             {
@@ -51,7 +45,6 @@ namespace OMS_API.Data
                 if (user == null)
                 {
                     await userManager.CreateAsync(funcionario, "123Pa$$word");
-                    await userManager.AddToRoleAsync(funcionario, Roles.Funcionario.ToString());
                 }
             }
         }
