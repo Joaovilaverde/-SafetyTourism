@@ -26,7 +26,7 @@ namespace SafetyTourism.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
 
-        // GET: Paises
+        // GET: paises
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -73,7 +73,7 @@ namespace SafetyTourism.Controllers
             return View(await PaginatedList<Pais>.CreateAsync(paises, pageNumber ?? 1, pageSize));
         }
 
-        // GET: Paises/Create
+        // GET: paises/create
         [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Create()
         {
@@ -89,7 +89,26 @@ namespace SafetyTourism.Controllers
             return View();
         }
 
-        // GET: Paises/Details/5
+        // POST: paises/create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Create([Bind("Id,Nome,ZonaId")] Pais pais)
+        {
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(pais), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/paises";
+                    var response = await client.PostAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(pais);
+        }
+
+        // GET: paises/details/pt
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -111,28 +130,64 @@ namespace SafetyTourism.Controllers
             return View(pais);
         }
 
-        // POST: Destinos/Create
+        // GET: paises/edit/pt
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Pais pais;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/paises/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                pais = await response.Content.ReadAsAsync<Pais>();
+            }
+            if (pais == null)
+            {
+                return NotFound();
+            }
+            var listaZonas = new List<Zona>();
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/zonas";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+            }
+            PopulateZonasDropDownList(listaZonas, id);
+            return View(pais);
+        }
+
+        // POST: paises/edit/pt
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionario,Administrador")]
-        public async Task<IActionResult> Create([Bind("Id,Nome,ZonaId")] Pais pais)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Nome,ZonaId")] Pais pais)
         {
+            if (id != pais.Id)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 using (HttpClient client = new HttpClient())
                 {
                     StringContent content = new StringContent(JsonConvert.SerializeObject(pais), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/paises";
-                    var response = await client.PostAsync(endpoint, content);
+                    string endpoint = apiBaseUrl + "/paises/" + id;
+                    var response = await client.PutAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(pais);
         }
 
-        // GET: Surtos/Delete/pt
+        // GET: paises/delete/pt
         [Authorize(Roles = "Funcionario,Administrador")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -153,7 +208,7 @@ namespace SafetyTourism.Controllers
             return View(pais);
         }
 
-        // POST: Paises/Delete/pt
+        // POST: paises/delete/pt
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionario,Administrador")]

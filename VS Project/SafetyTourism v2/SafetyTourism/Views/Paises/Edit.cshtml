@@ -17,6 +17,11 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label>Zona</label>
+                <select asp-for="ZonaId" class="form-control" asp-items="ViewBag.Zona"></select>
+                <span asp-validation-for="ZonaId" class="text-danger" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
