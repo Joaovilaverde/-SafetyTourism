@@ -18,9 +18,11 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Id da Zona</label>
-                <input asp-for="ZonaId" class="form-control" />
-                <span asp-validation-for="ZonaId" class="text-danger"></span>
+                <label>Zona</label>
+                <select asp-for="ZonaId" class="form-control" asp-items="ViewBag.Zona">
+                    <option value="">-- Escolher Zona --</option>
+                </select>
+                <span asp-validation-for="ZonaId" class="text-danger" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
