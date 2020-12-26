@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace SafetyTourism.Controllers
 {
@@ -111,27 +112,23 @@ namespace SafetyTourism.Controllers
         }
 
         // POST: Destinos/Create
-        /*[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionario,Administrador")]
-        public async Task<IActionResult> Create([Bind("Nome,ZonaId")] Pais pais)
+        public async Task<IActionResult> Create([Bind("Id,Nome,ZonaId")] Pais pais)
         {
             if (ModelState.IsValid)
             {
                 using (HttpClient client = new HttpClient())
                 {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(pais), Encoding.UTF8, "application/json");
                     string endpoint = apiBaseUrl + "/paises";
-                    var response = await client.PostAsync(endpoint);
-                    response.EnsureSuccessStatusCode();
-                    pais = await response.Content.ReadAsAsync<Pais>();
+                    var response = await client.PostAsync(endpoint, content);
                 }
-
-
-
                 return RedirectToAction(nameof(Index));
             }
             return View(pais);
-        }*/
+        }
 
         private void PopulateZonasDropDownList(List<Zona> listaZonas, object selectedZona = null)
         {
