@@ -34,7 +34,7 @@ namespace OMS_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pais>> GetPais(string id)
         {
-            var pais = await _context.Paises.FindAsync(id);
+            var pais = await _context.Paises.Include(z => z.Zona).FirstOrDefaultAsync(z=>z.Id == id);
 
             if (pais == null)
             {

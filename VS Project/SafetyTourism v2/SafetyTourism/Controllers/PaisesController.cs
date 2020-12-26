@@ -25,6 +25,7 @@ namespace SafetyTourism.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NomeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
+            ViewData["ZonaSortParm"] = sortOrder == "zona" ? "zona_desc" : "zona";
 
             if (searchString != null)
             {
@@ -41,24 +42,30 @@ namespace SafetyTourism.Controllers
             using (HttpClient client = new HttpClient())
             {
                 string endpoint = apiBaseUrl + "/paises";
-                using (var response = await client.GetAsync(endpoint))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    listaPaises = JsonConvert.DeserializeObject<List<Pais>>(apiResponse);
-                }
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaPaises = await response.Content.ReadAsAsync<List<Pais>>();
             }
+
             IQueryable<Pais> paises = (from p in listaPaises select p).AsQueryable();
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                paises = paises.Where(d => d.Nome.Contains(searchString));
+                paises = paises.Where(p => p.Nome.Contains(searchString) || p.Zona.Nome.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "nome_desc":
-                    paises = paises.OrderByDescending(d => d.Nome);
+                    paises = paises.OrderByDescending(p => p.Nome);
+                    break;
+                case "zona":
+                    paises = paises.OrderBy(p => p.Zona.Nome);
+                    break;
+                case "zona_desc":
+                    paises = paises.OrderByDescending(p => p.Zona.Nome);
                     break;
                 default:
-                    paises = paises.OrderBy(d => d.Nome);
+                    paises = paises.OrderBy(p => p.Nome);
                     break;
             }
             int pageSize = 10;
@@ -91,11 +98,9 @@ namespace SafetyTourism.Controllers
             using (HttpClient client = new HttpClient())
             {
                 string endpoint = apiBaseUrl + "/paises/" + id;
-                using (var response = await client.GetAsync(endpoint))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    pais = JsonConvert.DeserializeObject<Pais>(apiResponse);
-                }
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                pais = await response.Content.ReadAsAsync<Pais>();
             }
             if (pais == null)
             {
