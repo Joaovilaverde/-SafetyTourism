@@ -130,6 +130,43 @@ namespace SafetyTourism.Controllers
             return View(pais);
         }
 
+        // GET: Surtos/Delete/pt
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Pais pais;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/paises/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                pais = await response.Content.ReadAsAsync<Pais>();
+            }
+            if (pais == null)
+            {
+                return NotFound();
+            }
+            return View(pais);
+        }
+
+        // POST: Paises/Delete/pt
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/paises/" + id;
+                var response = await client.DeleteAsync(endpoint);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
         private void PopulateZonasDropDownList(List<Zona> listaZonas, object selectedZona = null)
         {
             var zonasQuery = from z in listaZonas
