@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using SafetyTourism.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SafetyTourism.Controllers
 {
@@ -70,6 +71,12 @@ namespace SafetyTourism.Controllers
             }
             int pageSize = 10;
             return View(await PaginatedList<Pais>.CreateAsync(paises, pageNumber ?? 1, pageSize));
+        }
+
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public IActionResult Create()
+        {
+            return View();
         }
 
         /*public async Task<IActionResult> Index()
