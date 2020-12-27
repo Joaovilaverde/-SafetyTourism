@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Recomendacoes\" />
     <Folder Include="Views\Virus\" />
     <Folder Include="Views\Zonas\" />
     <Folder Include="Views\Paises\" />

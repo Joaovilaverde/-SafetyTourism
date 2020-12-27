@@ -74,7 +74,9 @@ namespace OMS_API.Data
             );
             context.Recomendacoes.AddRange(
                 new Recomendacao { ZonaId = "eur", Data = DateTime.Parse("2020-2-12"), Validade = 10, Informacao = "Lavar as mãos" },
-                new Recomendacao { ZonaId = "afr", Data = DateTime.Parse("2020-2-12"), Validade = 10, Informacao = "Aceitar a morte certa" }
+                new Recomendacao { ZonaId = "afr", Data = DateTime.Parse("2018-4-20"), Validade = 5, Informacao = "Aceitar a morte certa" },
+                new Recomendacao { ZonaId = "ams", Data = DateTime.Parse("2021-6-02"), Validade = 30, Informacao = "Usar máscara" },
+                new Recomendacao { ZonaId = "oce", Data = DateTime.Parse("1020-1-15"), Validade = 100, Informacao = "Deitar tudo a perder" }
             );
             context.Virus.AddRange(
                 new Virus { Nome = "Covid" },

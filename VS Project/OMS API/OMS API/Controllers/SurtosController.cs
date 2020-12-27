@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace OMS_API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/surtos")]
     [ApiController]
     public class SurtosController : ControllerBase

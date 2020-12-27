@@ -1,0 +1,50 @@
+﻿@model SafetyTourism.Models.Recomendacao
+
+@{
+    ViewData["Title"] = "Criar recomendação";
+}
+
+
+
+<h4>Criar recomendação</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>Validade</label>
+                <input asp-for="Validade" class="form-control" />
+                <span asp-validation-for="Validade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Informação</label>
+                <input asp-for="Informacao" class="form-control" />
+                <span asp-validation-for="Informacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Data</label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Zona</label>
+                <select asp-for="ZonaId" class="form-control" asp-items="ViewBag.Zona">
+                    <option value="">-- Escolher Zona --</option>
+                </select>
+                <span asp-validation-for="ZonaId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
