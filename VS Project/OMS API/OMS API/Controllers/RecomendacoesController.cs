@@ -27,14 +27,14 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Recomendacao>>> GetRecomendacao()
         {
-            return await _context.Recomendacoes.ToListAsync();
+            return await _context.Recomendacoes.Include(z => z.Zona).ToListAsync();
         }
 
         // GET: api/Recomendacoes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Recomendacao>> GetRecomendacao(long id)
         {
-            var recomendacao = await _context.Recomendacoes.FindAsync(id);
+            var recomendacao = await _context.Recomendacoes.Include(z => z.Zona).FirstOrDefaultAsync(z => z.Id == id);
 
             if (recomendacao == null)
             {
