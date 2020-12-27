@@ -21,9 +21,41 @@
                         <li class="nav-item">
                             @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
                             {
-                            <div>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Paises" asp-action="Index">Países</a>
-                            </div>
+                                <div>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Paises" asp-action="Index">Países</a>
+                                </div>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                            {
+                                <div>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Zonas" asp-action="Index">Zonas</a>
+                                </div>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                            {
+                                <div>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Virus" asp-action="Index">Vírus</a>
+                                </div>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                            {
+                                <div>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Surtos" asp-action="Index">Surtos</a>
+                                </div>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("Visitante") || User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                            {
+                                <div>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Recomendacoes" asp-action="Index">Recomendações</a>
+                                </div>
                             }
                         </li>
                         <li class="nav-item">
