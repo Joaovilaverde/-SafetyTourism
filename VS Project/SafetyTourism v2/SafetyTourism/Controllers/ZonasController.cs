@@ -26,7 +26,7 @@ namespace SafetyTourism.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
 
-        //GET ZONAS
+        //GET ZONAS NO INDEX A APARECER
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -64,6 +64,62 @@ namespace SafetyTourism.Controllers
             }
             int pageSize = 10;
             return View(await PaginatedList<Zona>.CreateAsync(zonas, pageNumber ?? 1, pageSize));
+        }
+
+        //DETAILS
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Zona zona;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/zonas/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                zona = await response.Content.ReadAsAsync<Zona>();
+            }
+            if (zona == null)
+            {
+                return NotFound();
+            }
+            return View(zona);
+        }
+
+        // CREATE
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Create()
+        {
+            var listaZonas = new List<Zona>();
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/zonas";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+            }
+            return View();
+        }
+
+        // POST: paises/create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Create([Bind("Id,Nome")] Zona zona)
+        {
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(zona), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/zonas";
+                    var response = await client.PostAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(zona);
         }
     }
 }
