@@ -88,7 +88,7 @@ namespace SafetyTourism.Controllers
             return View(zona);
         }
 
-        // CREATE
+        // CREATE GET
         [Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Create()
         {
@@ -103,7 +103,7 @@ namespace SafetyTourism.Controllers
             return View();
         }
 
-        // POST: paises/create
+        // CREATE POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionario,Administrador")]
@@ -120,6 +120,84 @@ namespace SafetyTourism.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(zona);
+        }
+
+        //DELETE GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Zona zona;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/zonas/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                zona = await response.Content.ReadAsAsync<Zona>();
+            }
+            if (zona == null)
+            {
+                return NotFound();
+            }
+            return View(zona);
+        }
+
+        //DELETE POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+                using (HttpClient client = new HttpClient())
+                {
+                    string endpoint = apiBaseUrl + "/zonas/" + id;
+                    var response = await client.DeleteAsync(endpoint);
+                }
+                return RedirectToAction(nameof(Index));
+        }
+
+        //EDIT GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> Edit(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Zona zona;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/zonas/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                zona = await response.Content.ReadAsAsync<Zona>();
+            }
+            if (zona == null)
+            {
+                return NotFound();
+            }
+            return View(zona);
+        }
+
+        //EDIT POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Nome")] Zona zona)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(zona), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/zonas/" + id;
+                var response = await client.PutAsync(endpoint, content);
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
