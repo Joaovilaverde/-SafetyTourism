@@ -125,7 +125,7 @@ namespace SafetyTourism.Controllers
         //DELETE GET
         [Authorize(Roles = "Funcionario,Administrador")]
 
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -164,7 +164,7 @@ namespace SafetyTourism.Controllers
         //EDIT GET
         [Authorize(Roles = "Funcionario,Administrador")]
 
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {

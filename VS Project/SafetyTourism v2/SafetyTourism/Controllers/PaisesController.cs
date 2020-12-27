@@ -132,7 +132,7 @@ namespace SafetyTourism.Controllers
 
         // GET: paises/edit/pt
         [Authorize(Roles = "Funcionario,Administrador")]
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -187,7 +187,7 @@ namespace SafetyTourism.Controllers
 
         // GET: paises/delete/pt
         [Authorize(Roles = "Funcionario,Administrador")]
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -225,8 +225,8 @@ namespace SafetyTourism.Controllers
         private void PopulateZonasDropDownList(List<Zona> listaZonas, object selectedZona = null)
         {
             var zonasQuery = from z in listaZonas
-                               orderby z.Nome
-                               select z;
+                             orderby z.Nome
+                             select z;
             ViewBag.Zona = new SelectList(zonasQuery, "Id", "Nome", selectedZona);
         }
     }

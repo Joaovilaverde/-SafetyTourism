@@ -51,7 +51,7 @@ namespace SafetyTourism.Controllers
             IQueryable<Recomendacao> recomendacoes = (from r in listaRecomendacoes select r).AsQueryable();
             if (!String.IsNullOrEmpty(searchString))
             {
-                recomendacoes = recomendacoes.Where(r => r.Informacao.Contains(searchString));
+                recomendacoes = recomendacoes.Where(r => r.Informacao.Contains(searchString) || r.Zona.Nome.Contains(searchString));
             }
             switch (sortOrder)
             {

@@ -36,8 +36,8 @@ namespace OMS_API.Data
             //Seed Funcionario
             var funcionario = new ApplicationUser
             {
-                UserName = "funcionario@upskill.pt",
-                Email = "funcionario@upskill.pt"
+                UserName = "cliente@upskill.pt",
+                Email = "cliente@upskill.pt"
             };
             if (userManager.Users.All(u => u.Id != funcionario.Id))
             {

@@ -42,7 +42,7 @@ namespace OMS_API.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        [HttpPost("Registar")]
+        [HttpPost("registar")]
         public async Task<ActionResult<UserToken>> CreateUser([FromBody] UserInfo model)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -58,7 +58,7 @@ namespace OMS_API.Controllers
             }
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<ActionResult<UserToken>> Login([FromBody] UserInfo userInfo)
         {
             var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password, isPersistent: false, lockoutOnFailure: false);
@@ -102,7 +102,7 @@ namespace OMS_API.Controllers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // Tiempo de expiración del token. En nuestro caso lo hacemos de una hora.
-            var expiration = DateTime.UtcNow.AddHours(1);
+            var expiration = DateTime.UtcNow.AddHours(10);
 
             JwtSecurityToken token = new JwtSecurityToken(
                issuer: null,
