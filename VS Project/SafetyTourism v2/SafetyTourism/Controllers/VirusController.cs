@@ -121,6 +121,85 @@ namespace SafetyTourism.Controllers
             return RedirectToAction(nameof(Index));
             }
             return View(virus);
-        }       
+        }  
+        
+        //DELETE GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+        
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Virus virus;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/virus/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                virus = await response.Content.ReadAsAsync<Virus>();
+            }
+            if (virus == null)
+            {
+                return NotFound();
+            }
+            return View(virus);
+        }
+
+        //DELETE POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/virus/" + id;
+                var response = await client.DeleteAsync(endpoint);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        //EDIT GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Virus virus;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/virus/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                virus = await response.Content.ReadAsAsync<Virus>();
+            }
+            if (virus == null)
+            {
+                return NotFound();
+            }
+            return View(virus);
+        }
+
+        //EDIT POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> Edit(long id, [Bind("Id, Nome")] Virus virus)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(virus), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/virus/" + id;
+                var response = await client.PutAsync(endpoint, content);
+            }
+            return RedirectToAction(nameof(Index));
+        }      
     }
 }
