@@ -51,7 +51,7 @@ namespace OMS_API.Data
         public static void Initialize(OMSContext context)
         {
             // Look for any Zonas.
-            if (context.Virus.Any())
+            if (context.Surtos.Any())
             {
                 return;   // DB has been seeded
             }
@@ -73,10 +73,13 @@ namespace OMS_API.Data
                 new Pais { Id = "moc", Nome = "Moçambique", ZonaId = "afr" }
             );
             context.Recomendacoes.AddRange(
-                new Recomendacao { ZonaId = "eur", Data = DateTime.Parse("2020-2-12"), Validade = 10, Informacao = "Lavar as mãos" },
-                new Recomendacao { ZonaId = "afr", Data = DateTime.Parse("2018-4-20"), Validade = 5, Informacao = "Aceitar a morte certa" },
-                new Recomendacao { ZonaId = "ams", Data = DateTime.Parse("2021-6-02"), Validade = 30, Informacao = "Usar máscara" },
-                new Recomendacao { ZonaId = "oce", Data = DateTime.Parse("1020-1-15"), Validade = 100, Informacao = "Deitar tudo a perder" }
+                new Recomendacao { ZonaId = "eur", Data = DateTime.Parse("2020-2-12"), Validade = DateTime.Parse("2020-2-22"), Informacao = "Lavar as mãos" },
+                new Recomendacao { ZonaId = "eur", Data = DateTime.Parse("2020-5-12"), Validade = DateTime.Parse("2021-2-22"), Informacao = "Lavar os pés" },
+                new Recomendacao { ZonaId = "eur", Data = DateTime.Parse("2020-7-4"), Validade = DateTime.Parse("2021-7-4"), Informacao = "Festejar" },
+                new Recomendacao { ZonaId = "eur", Data = DateTime.Parse("2020-12-27"), Validade = DateTime.Parse("2020-12-31"), Informacao = "Lavar os ouvidos" },
+                new Recomendacao { ZonaId = "afr", Data = DateTime.Parse("2018-4-20"), Validade = DateTime.Parse("2018-4-25"), Informacao = "Aceitar a morte certa" },
+                new Recomendacao { ZonaId = "ams", Data = DateTime.Parse("2021-6-02"), Validade = DateTime.Parse("2021-7-02"), Informacao = "Usar máscara" },
+                new Recomendacao { ZonaId = "oce", Data = DateTime.Parse("1020-1-15"), Validade = DateTime.Parse("1020-4-12"), Informacao = "Deitar tudo a perder" }
             );
             context.Virus.AddRange(
                 new Virus { Nome = "Covid" },

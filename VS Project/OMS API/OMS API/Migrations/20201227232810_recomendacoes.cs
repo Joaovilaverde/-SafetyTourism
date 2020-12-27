@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OMS_API.Migrations
 {
-    public partial class identity : Migration
+    public partial class recomendacoes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -204,7 +204,7 @@ namespace OMS_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ZonaId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Data = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Validade = table.Column<long>(type: "bigint", nullable: false),
+                    Validade = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Informacao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

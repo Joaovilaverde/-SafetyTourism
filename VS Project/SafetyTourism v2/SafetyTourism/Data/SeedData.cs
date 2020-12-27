@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SafetyTourism.Data
 {
-    public static class DbInitializer
+    public static class SeedData
     {
         public static async Task SeedRolesAsync(UserManager<Utilizador> userManager, RoleManager<IdentityRole> roleManager)
         {

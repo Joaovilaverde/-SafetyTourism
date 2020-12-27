@@ -49,7 +49,7 @@ namespace OMS_API.Controllers
         public async Task<IQueryable<Recomendacao>> GetRecomendacaoByPaisAsync(string paisId)
         {
             Pais pais = await _context.Paises.FindAsync(paisId);
-            return _context.Recomendacoes.Include(r => r.Zona).Where(c => c.ZonaId == pais.ZonaId);
+            return _context.Recomendacoes.Include(r => r.Zona).Where(c => c.ZonaId == pais.ZonaId && c.Validade > DateTime.Now);
         }
 
         // PUT: Editar a nota de recomendação

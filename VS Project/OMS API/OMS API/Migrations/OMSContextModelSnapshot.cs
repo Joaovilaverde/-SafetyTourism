@@ -246,8 +246,8 @@ namespace OMS_API.Migrations
                     b.Property<string>("Informacao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Validade")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime>("Validade")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ZonaId")
                         .HasColumnType("nvarchar(450)");

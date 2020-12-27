@@ -8,9 +8,9 @@ using SafetyTourism.Models;
 
 namespace SafetyTourism.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Utilizador>
+    public class SafetyTourismContext : IdentityDbContext<Utilizador>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public SafetyTourismContext(DbContextOptions<SafetyTourismContext> options)
             : base(options)
         {
         }

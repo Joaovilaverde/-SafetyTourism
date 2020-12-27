@@ -29,8 +29,10 @@ namespace SafetyTourism.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["NomeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
-            ViewData["ZonaSortParm"] = sortOrder == "zona" ? "zona_desc" : "zona";
+            ViewData["ZonaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "zona_desc" : "";
+            ViewData["InformacaoSortParm"] = sortOrder == "inf" ? "inf_desc" : "inf";
+            ViewData["DataSortParm"] = sortOrder == "data" ? "data_desc" : "data";
+            ViewData["ValidadeSortParm"] = sortOrder == "val" ? "val_desc" : "val";
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -55,11 +57,29 @@ namespace SafetyTourism.Controllers
             }
             switch (sortOrder)
             {
-                case "nome_desc":
+                case "zona_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Zona.Nome);
+                    break;
+                case "inf":
+                    recomendacoes = recomendacoes.OrderBy(r => r.Informacao);
+                    break;
+                case "inf_desc":
                     recomendacoes = recomendacoes.OrderByDescending(r => r.Informacao);
                     break;
+                case "data":
+                    recomendacoes = recomendacoes.OrderBy(r => r.Data);
+                    break;
+                case "data_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Data);
+                    break;
+                case "val":
+                    recomendacoes = recomendacoes.OrderBy(r => r.Validade);
+                    break;
+                case "val_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Validade);
+                    break;
                 default:
-                    recomendacoes = recomendacoes.OrderBy(r => r.Informacao);
+                    recomendacoes = recomendacoes.OrderBy(r => r.Zona.Nome);
                     break;
             }
             int pageSize = 10;

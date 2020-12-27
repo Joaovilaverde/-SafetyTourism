@@ -10,6 +10,18 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-4">
+            Zona da Recomendação
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Zona.Nome)
+        </dd>
+        <dt class="col-sm-4">
+            Informação
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Informacao)
+        </dd>
+        <dt class="col-sm-4">
             Data da Recomendação
         </dt>
         <dd class="col-sm-8">
@@ -20,24 +32,6 @@
         </dt>
         <dd class="col-sm-8">
             @Html.DisplayFor(model => model.Validade)
-        </dd>
-        <dt class="col-sm-4">
-            Informação
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Informacao)
-        </dd>
-        <dt class="col-sm-4">
-            Zona da Recomendação
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.Zona.Nome)
-        </dd>
-        <dt class="col-sm-4">
-            Id da Zona da Recomendação
-        </dt>
-        <dd class="col-sm-8">
-            @Html.DisplayFor(model => model.ZonaId)
         </dd>
     </dl>
 </div>

@@ -24,11 +24,11 @@ namespace SafetyTourism
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var context = services.GetRequiredService<SafetyTourismContext>();
                     var userManager = services.GetRequiredService<UserManager<Utilizador>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await DbInitializer.SeedRolesAsync(userManager, roleManager);
-                    await DbInitializer.SeedAdministradorAsync(userManager, roleManager);
+                    await SeedData.SeedRolesAsync(userManager, roleManager);
+                    await SeedData.SeedAdministradorAsync(userManager, roleManager);
                 }
                 catch (Exception ex)
                 {

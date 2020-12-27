@@ -10,8 +10,8 @@ using OMS_API.Data;
 namespace OMS_API.Migrations
 {
     [DbContext(typeof(OMSContext))]
-    [Migration("20201222162227_identity")]
-    partial class identity
+    [Migration("20201227232810_recomendacoes")]
+    partial class recomendacoes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -248,8 +248,8 @@ namespace OMS_API.Migrations
                     b.Property<string>("Informacao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Validade")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime>("Validade")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ZonaId")
                         .HasColumnType("nvarchar(450)");

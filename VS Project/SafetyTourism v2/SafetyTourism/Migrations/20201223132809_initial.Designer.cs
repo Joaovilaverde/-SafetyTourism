@@ -9,7 +9,7 @@ using SafetyTourism.Data;
 
 namespace SafetyTourism.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SafetyTourismContext))]
     [Migration("20201223132809_initial")]
     partial class initial
     {

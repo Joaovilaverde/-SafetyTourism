@@ -30,16 +30,16 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DataSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ValidadeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Validade</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ZonaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Zona</a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["InformacaoSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Informação</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ZonaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Zona</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DataSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ValidadeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Validade</a>
             </th>
             <th></th>
         </tr>
@@ -49,16 +49,16 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Validade) dias
+                @Html.DisplayFor(modelItem => item.Zona.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Informacao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Zona.Nome)
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Validade)
             </td>
             <td>
                 @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))

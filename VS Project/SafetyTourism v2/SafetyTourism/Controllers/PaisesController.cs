@@ -222,6 +222,63 @@ namespace SafetyTourism.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Obter as recomendações válidas para o país referido
+        public async Task<IActionResult> Recomendacoes(string id, string sortOrder, string currentFilter, int? pageNumber)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["ZonaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "zona_desc" : "";
+            ViewData["InformacaoSortParm"] = sortOrder == "inf" ? "inf_desc" : "inf";
+            ViewData["DataSortParm"] = sortOrder == "data" ? "data_desc" : "data";
+            ViewData["ValidadeSortParm"] = sortOrder == "val" ? "val_desc" : "val";
+            ViewData["CurrentFilter"] = currentFilter;
+            var listaRecomendacoes = new List<Recomendacao>();
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/paises/" + id + "/recomendacoes";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaRecomendacoes = await response.Content.ReadAsAsync<List<Recomendacao>>();
+            }
+            if (listaRecomendacoes == null)
+            {
+                return NotFound();
+            }
+            IQueryable<Recomendacao> recomendacoes = (from r in listaRecomendacoes select r).AsQueryable();
+            switch (sortOrder)
+            {
+                case "zona_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Zona.Nome);
+                    break;
+                case "inf":
+                    recomendacoes = recomendacoes.OrderBy(r => r.Informacao);
+                    break;
+                case "inf_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Informacao);
+                    break;
+                case "data":
+                    recomendacoes = recomendacoes.OrderBy(r => r.Data);
+                    break;
+                case "data_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Data);
+                    break;
+                case "val":
+                    recomendacoes = recomendacoes.OrderBy(r => r.Validade);
+                    break;
+                case "val_desc":
+                    recomendacoes = recomendacoes.OrderByDescending(r => r.Validade);
+                    break;
+                default:
+                    recomendacoes = recomendacoes.OrderBy(r => r.Zona.Nome);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Recomendacao>.CreateAsync(recomendacoes, pageNumber ?? 1, pageSize));
+        }
+
         private void PopulateZonasDropDownList(List<Zona> listaZonas, object selectedZona = null)
         {
             var zonasQuery = from z in listaZonas
