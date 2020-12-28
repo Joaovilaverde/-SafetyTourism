@@ -242,5 +242,124 @@ namespace SafetyTourism.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: Obter os surtos activos para o virus referido
+        public async Task<IActionResult> SurtosActivos(string id, string sortOrder, string currentFilter, int? pageNumber)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["ZonaSortParm"] = sortOrder == "zona" ? "zona_desc" : "zona";
+            ViewData["VirusSortParm"] = sortOrder == "vir" ? "vir_desc" : "vir";
+            ViewData["DataDetecaoSortParm"] = String.IsNullOrEmpty(sortOrder) ? "data_desc" : "";
+            ViewData["CurrentFilter"] = currentFilter;
+            var listaSurtos = new List<Surto>();
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/surtos/virus/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaSurtos = await response.Content.ReadAsAsync<List<Surto>>();
+            }
+
+            if (listaSurtos == null)
+            {
+                return NotFound();
+            }
+            IQueryable<Surto> surtos = (from s in listaSurtos select s).AsQueryable();
+            switch (sortOrder)
+            {
+                case "zona":
+                    surtos = surtos.OrderBy(s => s.Zona.Nome);
+                    break;
+                case "zona_desc":
+                    surtos = surtos.OrderByDescending(s => s.Zona.Nome);
+                    break;
+                case "vir":
+                    surtos = surtos.OrderBy(s => s.Virus.Nome);
+                    break;
+                case "vir_desc":
+                    surtos = surtos.OrderByDescending(s => s.Virus.Nome);
+                    break;
+                case "data_desc":
+                    surtos = surtos.OrderByDescending(s => s.DataDetecao);
+                    break;
+                default:
+                    surtos = surtos.OrderBy(s => s.DataDetecao);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Surto>.CreateAsync(surtos, pageNumber ?? 1, pageSize));
+        }
+
+        // GET: Obter os surtos ocorridos para o virus referido
+        public async Task<IActionResult> Surtos(string id, string sortOrder, string currentFilter, int? pageNumber)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["ZonaSortParm"] = sortOrder == "zona" ? "zona_desc" : "zona";
+            ViewData["VirusSortParm"] = sortOrder == "vir" ? "vir_desc" : "vir";
+            ViewData["DataDetecaoSortParm"] = String.IsNullOrEmpty(sortOrder) ? "data_desc" : "";
+            ViewData["DataFimSortParm"] = sortOrder == "datafim" ? "datafim_desc" : "datafim";
+            ViewData["CurrentFilter"] = currentFilter;
+            var listaSurtos = new List<Surto>();
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/virus/" + id + "/surtos";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaSurtos = await response.Content.ReadAsAsync<List<Surto>>();
+            }
+
+            if (listaSurtos == null)
+            {
+                return NotFound();
+            }
+            IQueryable<Surto> surtos = (from s in listaSurtos select s).AsQueryable();
+            switch (sortOrder)
+            {
+                case "zona":
+                    surtos = surtos.OrderBy(s => s.Zona.Nome);
+                    break;
+                case "zona_desc":
+                    surtos = surtos.OrderByDescending(s => s.Zona.Nome);
+                    break;
+                case "vir":
+                    surtos = surtos.OrderBy(s => s.Virus.Nome);
+                    break;
+                case "vir_desc":
+                    surtos = surtos.OrderByDescending(s => s.Virus.Nome);
+                    break;
+                case "data_desc":
+                    surtos = surtos.OrderByDescending(s => s.DataDetecao);
+                    break;
+                case "datafim":
+                    surtos = surtos.OrderBy(s => s.DataFim);
+                    break;
+                case "datafim_desc":
+                    surtos = surtos.OrderByDescending(s => s.DataFim);
+                    break;
+                default:
+                    surtos = surtos.OrderBy(s => s.DataDetecao);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Surto>.CreateAsync(surtos, pageNumber ?? 1, pageSize));
+        }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model PaginatedList<SafetyTourism.Models.Surto>
+
+@{
+    ViewData["Title"] = "Surtos";
+}
+
+<h1>Surtos ocorridos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Surtos" asp-route-sortOrder="@ViewData["ZonaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Zona</a>
+            </th>
+            <th>
+                <a asp-action="Surtos" asp-route-sortOrder="@ViewData["VirusSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Vírus</a>
+            </th>
+            <th>
+                <a asp-action="Surtos" asp-route-sortOrder="@ViewData["DataDetecaoSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data de Deteção</a>
+            </th>
+            <th>
+                <a asp-action="Surtos" asp-route-sortOrder="@ViewData["DataFimSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data de Fim</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Virus.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataDetecao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div><a asp-action="Index">Voltar à lista</a></div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Surtos"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Anterior
+</a>
+<a asp-action="Surtos"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Seguinte
+</a>

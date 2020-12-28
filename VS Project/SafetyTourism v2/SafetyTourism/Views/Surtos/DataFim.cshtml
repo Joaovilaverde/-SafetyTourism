@@ -1,0 +1,35 @@
+﻿@model SafetyTourism.Models.Surto
+
+@{
+    ViewData["Title"] = "Data de fim";
+}
+
+<h4>Definir data de fim do surto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DataFim">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ZonaId" />
+            <input type="hidden" asp-for="VirusId" />
+            <input type="hidden" asp-for="DataDetecao" />
+            <div class="form-group">
+                <label>Data de Fim</label>
+                <input asp-for="DataFim" class="form-control" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

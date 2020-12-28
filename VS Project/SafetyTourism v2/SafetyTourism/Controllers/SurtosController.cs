@@ -289,7 +289,82 @@ namespace SafetyTourism.Controllers
             }
             return View(surto);
         }
-     
+
+        // GET: Alterar a data de fim do surto
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> DataFim(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Surto surto;
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/surtos/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                surto = await response.Content.ReadAsAsync<Surto>();
+            }
+            if (surto == null)
+            {
+                return NotFound();
+            }
+            var listaZonas = new List<Zona>();
+            var listaVirus = new List<Virus>();
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                var responseZonas = await client.GetAsync(apiBaseUrl + "/zonas");
+                responseZonas.EnsureSuccessStatusCode();
+                listaZonas = await responseZonas.Content.ReadAsAsync<List<Zona>>();
+                var responseVirus = await client.GetAsync(apiBaseUrl + "/virus");
+                responseZonas.EnsureSuccessStatusCode();
+                listaVirus = await responseVirus.Content.ReadAsAsync<List<Virus>>();
+            }
+            PopulateZonasDropDownList(listaZonas, id);
+            PopulateVirusDropDownList(listaVirus, id);
+            return View(surto);
+        }
+
+
+        // PUT: Alterar a data de fim do surto
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> DataFim(long id, [Bind("Id,VirusId,DataDetecao,DataFim,ZonaId")] Surto surto)
+        {
+            if (id != surto.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    UserInfo user = new UserInfo();
+                    StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(surto), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/surtos/" + surto.ZonaId + "/" + surto.VirusId;
+                    var response = await client.PutAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(surto);
+        }
+
         private void PopulateZonasDropDownList(List<Zona> listaZonas, object selectedZona = null)
         {
             var zonasQuery = from z in listaZonas

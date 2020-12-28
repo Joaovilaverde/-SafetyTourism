@@ -51,7 +51,7 @@ namespace OMS_API.Controllers
         public async Task<IQueryable<Surto>> GetSurtoByPaisAsync(string paisId)
         {
             Pais pais = await _context.Paises.FindAsync(paisId);
-            return _context.Surtos.Include(s => s.VirusId).Include(s => s.ZonaId).Where(s => s.ZonaId == pais.ZonaId);
+            return _context.Surtos.Include(s => s.Virus).Include(s => s.Zona).Where(s => s.ZonaId == pais.ZonaId && s.DataFim == null);
         }
 
         //GET: Obter informação sobre todos os surtos ativos associados ao vírus referido
@@ -99,32 +99,27 @@ namespace OMS_API.Controllers
             return NoContent();
         }
 
-        // PATCH: Alterar a data de fim do surto
-        [HttpPatch("~/api/surtos/{zonaId}/{virusId}")]
-        public async Task<ActionResult> Patch(string zonaId, long virusId, [FromBody] JsonPatchDocument<Surto> patchDoc)
+        // PUT: Alterar a data de fim do surto
+        [HttpPut("~/api/surtos/{zonaId}/{virusId}")]
+        public async Task<ActionResult> DataFim(Surto surto)
         {
-            if (patchDoc == null)
+            _context.Entry(surto).State = EntityState.Modified;
+
+            try
             {
-                return BadRequest();
+                await _context.SaveChangesAsync();
             }
-
-            var surto = await _context.Surtos.FirstOrDefaultAsync(s => s.ZonaId == zonaId && s.VirusId == virusId);
-
-            if (surto == null)
+            catch (DbUpdateConcurrencyException)
             {
-                return NotFound();
+                if (!SurtoExists(surto.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
-
-            patchDoc.ApplyTo(surto, ModelState);
-
-            var isValid = TryValidateModel(surto);
-
-            if (!isValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }

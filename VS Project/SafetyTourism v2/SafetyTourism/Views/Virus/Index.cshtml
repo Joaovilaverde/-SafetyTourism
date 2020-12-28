@@ -45,17 +45,21 @@
                 <td>
                     @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
                     {
-                        <div>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                        </div>
+                    <div>
+                        <a asp-action="SurtosActivos" asp-route-id="@item.Id">Surtos Activos</a> |
+                        <a asp-action="Surtos" asp-route-id="@item.Id">Surtos Ocorridos</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    </div>
                     }
                     @if (User.IsInRole("Visitante"))
                     {
-                        <div>
-                            <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                        </div>
+                <div>
+                    <a asp-action="SurtosActivos" asp-route-id="@item.Id">Surtos Activos</a> |
+                    <a asp-action="Surtos" asp-route-id="@item.Id">Surtos Ocorridos</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                </div>
                     }
                 </td>
             </tr>
