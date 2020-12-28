@@ -1,0 +1,51 @@
+﻿@model SafetyTourism.Models.Surto
+
+@{
+    ViewData["Title"] = "Editar Surto";
+}
+
+<h4>Editar surto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label>Zona</label>
+                <select asp-for="ZonaId" class="form-control" asp-items="ViewBag.Zona">
+                    <option value="">-- Escolher Zona --</option>
+                </select>
+                <span asp-validation-for="ZonaId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label>Vírus</label>
+                <select asp-for="VirusId" class="form-control" asp-items="ViewBag.Virus">
+                    <option value="">-- Escolher Vírus --</option>
+                </select>
+                <span asp-validation-for="VirusId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label>Data de Deteção</label>
+                <input asp-for="DataDetecao" class="form-control" />
+                <span asp-validation-for="DataDetecao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Data de Fim</label>
+                <input asp-for="DataFim" class="form-control" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,47 @@
+﻿@model SafetyTourism.Models.Surto
+
+@{
+    ViewData["Title"] = "Detalhes do Surto";
+}
+
+
+<div>
+    <h4>Detalhes do surto</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            Id
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-4">
+            Id do Vírus
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.VirusId)
+        </dd>
+        <dt class="col-sm-4">
+            Id da Zona
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.ZonaId)
+        </dd>
+        <dt class="col-sm-4">
+            Data de Deteção
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.DataDetecao)
+        </dd>
+        <dt class="col-sm-4">
+            Data de Fim
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Voltar à lista</a>
+</div>

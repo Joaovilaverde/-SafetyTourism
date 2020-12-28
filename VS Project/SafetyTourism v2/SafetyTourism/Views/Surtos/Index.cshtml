@@ -1,0 +1,102 @@
+﻿@model PaginatedList<SafetyTourism.Models.Surto>
+
+@{
+    ViewData["Title"] = "Surtos";
+}
+
+<h1>Surtos</h1>
+
+<p>
+    @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+    {
+        <div>
+            <a asp-action="Create">Criar novo surto</a>
+        </div>
+    }
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Pesquisar por Zona: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Pesquisar" class="btn btn-default" /> |
+            <a asp-action="Index">Voltar à lista completa</a>
+        </p>
+    </div>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ZonaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Zona</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VirusIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Vírus</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DataDetecaoSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data de Deteção</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DataFimSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data de Fim</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VirusId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataDetecao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+            <td>
+                @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+                {
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    </div>
+                }
+                @if (User.IsInRole("Visitante"))
+                {
+                    <div>
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    </div>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Anterior
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Seguinte
+</a>
