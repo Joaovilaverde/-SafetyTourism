@@ -18,7 +18,7 @@
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Pesquisar por Zona: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            Pesquisar por Zona ou Vírus: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Pesquisar" class="btn btn-default" /> |
             <a asp-action="Index">Voltar à lista completa</a>
         </p>
@@ -33,7 +33,7 @@
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["ZonaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Zona</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["VirusIdSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Vírus</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VirusSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Vírus</a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["DataDetecaoSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Data de Deteção</a>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Zona.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VirusId)
+                @Html.DisplayFor(modelItem => item.Virus.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataDetecao)

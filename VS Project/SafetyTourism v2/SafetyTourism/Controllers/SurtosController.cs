@@ -31,7 +31,7 @@ namespace SafetyTourism.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["ZonaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "zona_desc" : "";
-            ViewData["VirusIdSortParm"] = sortOrder == "vir" ? "vir_desc" : "vir";
+            ViewData["VirusSortParm"] = sortOrder == "vir" ? "vir_desc" : "vir";
             ViewData["DataDetecaoSortParm"] = sortOrder == "data" ? "data_desc" : "data";
             ViewData["DataFimSortParm"] = sortOrder == "datafim" ? "datafim_desc" : "datafim";
             if (searchString != null)
@@ -59,7 +59,7 @@ namespace SafetyTourism.Controllers
             IQueryable<Surto> surtos = (from s in listaSurtos select s).AsQueryable();
             if (!String.IsNullOrEmpty(searchString))
             {
-                surtos = surtos.Where(s => s.Zona.Nome.Contains(searchString));
+                surtos = surtos.Where(s => s.Zona.Nome.Contains(searchString) || s.Virus.Nome.Contains(searchString));
             }
             switch (sortOrder)
             {
@@ -67,10 +67,10 @@ namespace SafetyTourism.Controllers
                     surtos = surtos.OrderByDescending(s => s.Zona.Nome);
                     break;
                 case "vir":
-                    surtos = surtos.OrderBy(s => s.VirusId);
+                    surtos = surtos.OrderBy(s => s.Virus.Nome);
                     break;
                 case "vir_desc":
-                    surtos = surtos.OrderByDescending(s => s.VirusId);
+                    surtos = surtos.OrderByDescending(s => s.Virus.Nome);
                     break;
                 case "data":
                     surtos = surtos.OrderBy(s => s.DataDetecao);
@@ -124,7 +124,7 @@ namespace SafetyTourism.Controllers
         public async Task<IActionResult> Create()
         {
             var listaZonas = new List<Zona>();
-            //var listaVirus = new List<Virus>();
+            var listaVirus = new List<Virus>();
             using (HttpClient client = new HttpClient())
             {
                 UserInfo user = new UserInfo();
@@ -136,9 +136,10 @@ namespace SafetyTourism.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+                listaVirus = await response.Content.ReadAsAsync<List<Virus>>();
             }
             PopulateZonasDropDownList(listaZonas);
-            //PopulateVirusDropDownList(listaVirus);
+            PopulateVirusDropDownList(listaVirus);
             return View();
         }
 
@@ -292,12 +293,12 @@ namespace SafetyTourism.Controllers
             ViewBag.Zona = new SelectList(zonasQuery, "Id", "Nome", selectedZona);
         }
 
-        /*private void PopulateVirusDropDownList(List<Virus> listaVirus, object selectedVirus = null)
+        private void PopulateVirusDropDownList(List<Virus> listaVirus, object selectedVirus = null)
         {
             var virusQuery = from v in listaVirus
-                             orderby v.Id
+                             orderby v.Nome
                              select v;
-            ViewBag.Virus = new SelectList(virusQuery, "Id", selectedVirus);
-        }*/
+            ViewBag.Virus = new SelectList(virusQuery, "Id", "Nome", selectedVirus);
+        }
     }
 }

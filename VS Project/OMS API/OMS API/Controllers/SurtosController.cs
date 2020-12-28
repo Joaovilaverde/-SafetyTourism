@@ -29,14 +29,14 @@ namespace OMS_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Surto>>> GetSurto()
         {
-            return await _context.Surtos.Include(z => z.Zona).ToListAsync();
+            return await _context.Surtos.Include(z => z.Zona).Include(z => z.Virus).ToListAsync();
         }
 
         // GET: api/Surtos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Surto>> GetSurto(long id)
         {
-            var surto = await _context.Surtos.Include(z => z.Zona).FirstOrDefaultAsync(z => z.Id == id);
+            var surto = await _context.Surtos.Include(z => z.Zona).Include(z => z.Virus).FirstOrDefaultAsync(z => z.Id == id);
 
             if (surto == null)
             {

@@ -22,10 +22,22 @@
             @Html.DisplayFor(model => model.VirusId)
         </dd>
         <dt class="col-sm-4">
+            Nome do Vírus
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Virus.Nome)
+        </dd>
+        <dt class="col-sm-4">
             Id da Zona
         </dt>
         <dd class="col-sm-8">
             @Html.DisplayFor(model => model.ZonaId)
+        </dd>
+        <dt class="col-sm-4">
+            Nome da Zona
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Zona.Nome)
         </dd>
         <dt class="col-sm-4">
             Data de Deteção
