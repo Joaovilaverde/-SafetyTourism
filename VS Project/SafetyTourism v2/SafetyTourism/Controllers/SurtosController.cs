@@ -132,11 +132,12 @@ namespace SafetyTourism.Controllers
                 var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
                 UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-                string endpoint = apiBaseUrl + "/zonas";
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
-                listaVirus = await response.Content.ReadAsAsync<List<Virus>>();
+                var responseZonas = await client.GetAsync(apiBaseUrl + "/zonas");
+                responseZonas.EnsureSuccessStatusCode();
+                listaZonas = await responseZonas.Content.ReadAsAsync<List<Zona>>();
+                var responseVirus = await client.GetAsync(apiBaseUrl + "/virus");
+                responseZonas.EnsureSuccessStatusCode();
+                listaVirus = await responseVirus.Content.ReadAsAsync<List<Virus>>();
             }
             PopulateZonasDropDownList(listaZonas);
             PopulateVirusDropDownList(listaVirus);
@@ -241,6 +242,7 @@ namespace SafetyTourism.Controllers
                 return NotFound();
             }
             var listaZonas = new List<Zona>();
+            var listaVirus = new List<Virus>();
             using (HttpClient client = new HttpClient())
             {
                 UserInfo user = new UserInfo();
@@ -248,12 +250,15 @@ namespace SafetyTourism.Controllers
                 var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
                 UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-                string endpoint = apiBaseUrl + "/zonas";
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+                var responseZonas = await client.GetAsync(apiBaseUrl + "/zonas");
+                responseZonas.EnsureSuccessStatusCode();
+                listaZonas = await responseZonas.Content.ReadAsAsync<List<Zona>>();
+                var responseVirus = await client.GetAsync(apiBaseUrl + "/virus");
+                responseZonas.EnsureSuccessStatusCode();
+                listaVirus = await responseVirus.Content.ReadAsAsync<List<Virus>>();
             }
             PopulateZonasDropDownList(listaZonas, id);
+            PopulateVirusDropDownList(listaVirus, id);
             return View(surto);
         }
 

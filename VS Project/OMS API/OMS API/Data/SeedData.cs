@@ -89,7 +89,6 @@ namespace OMS_API.Data
             );
             context.Surtos.AddRange(
                 new Surto { VirusId = 1, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
-                new Surto { VirusId = 1, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-12-13"), DataFim = DateTime.Parse("2020-12-20") },
                 new Surto { VirusId = 2, ZonaId = "eur", DataDetecao = DateTime.Parse("2020-11-21") },
                 new Surto { VirusId = 2, ZonaId = "ant", DataDetecao = DateTime.Parse("2020-10-09"), DataFim = DateTime.Parse("2020-11-09") },
                 new Surto { VirusId = 2, ZonaId = "ant", DataDetecao = DateTime.Parse("2020-12-21") },
