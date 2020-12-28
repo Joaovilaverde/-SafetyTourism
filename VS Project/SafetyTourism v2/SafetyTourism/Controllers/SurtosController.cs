@@ -92,6 +92,198 @@ namespace SafetyTourism.Controllers
             return View(await PaginatedList<Surto>.CreateAsync(surtos, pageNumber ?? 1, pageSize));
         }
 
+        //DETAILS
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Surto surto;
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/surtos/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                surto = await response.Content.ReadAsAsync<Surto>();
+            }
+            if (surto == null)
+            {
+                return NotFound();
+            }
+            return View(surto);
+        }
+
+        //CREATE GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Create()
+        {
+            var listaZonas = new List<Zona>();
+            //var listaVirus = new List<Virus>();
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/zonas";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+            }
+            PopulateZonasDropDownList(listaZonas);
+            //PopulateVirusDropDownList(listaVirus);
+            return View();
+        }
+
+        //CREATE POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Create([Bind("Id,VirusId,DataDetecao,DataFim,ZonaId")] Surto surto)
+        {
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    UserInfo user = new UserInfo();
+                    StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(surto), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/surtos";
+                    var response = await client.PostAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(surto);
+        }
+
+        //DELETE GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Surto surto;
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/surtos/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                surto = await response.Content.ReadAsAsync<Surto>();
+            }
+            if (surto == null)
+            {
+                return NotFound();
+            }
+            return View(surto);
+        }
+
+        //DELETE POST
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/surtos/" + id;
+                var response = await client.DeleteAsync(endpoint);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //EDIT GET
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Surto surto;
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/surtos/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                surto = await response.Content.ReadAsAsync<Surto>();
+            }
+            if (surto == null)
+            {
+                return NotFound();
+            }
+            var listaZonas = new List<Zona>();
+            using (HttpClient client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/zonas";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+            }
+            PopulateZonasDropDownList(listaZonas, id);
+            return View(surto);
+        }
+
+        //EDIT POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long id, [Bind("Id,VirusId,DataDetecao,DataFim,ZonaId")] Surto surto)
+        {
+            if (id != surto.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    UserInfo user = new UserInfo();
+                    StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(surto), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/surtos/" + id;
+                    var response = await client.PutAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(surto);
+        }
+     
         private void PopulateZonasDropDownList(List<Zona> listaZonas, object selectedZona = null)
         {
             var zonasQuery = from z in listaZonas
@@ -99,5 +291,13 @@ namespace SafetyTourism.Controllers
                              select z;
             ViewBag.Zona = new SelectList(zonasQuery, "Id", "Nome", selectedZona);
         }
+
+        /*private void PopulateVirusDropDownList(List<Virus> listaVirus, object selectedVirus = null)
+        {
+            var virusQuery = from v in listaVirus
+                             orderby v.Id
+                             select v;
+            ViewBag.Virus = new SelectList(virusQuery, "Id", selectedVirus);
+        }*/
     }
 }
