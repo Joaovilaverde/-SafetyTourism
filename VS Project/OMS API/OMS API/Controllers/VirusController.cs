@@ -11,7 +11,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/virus")]
     [ApiController]
     public class VirusController : ControllerBase

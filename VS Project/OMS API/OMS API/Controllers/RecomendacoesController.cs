@@ -11,7 +11,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/recomendacoes")]
     [ApiController]
     public class RecomendacoesController : ControllerBase

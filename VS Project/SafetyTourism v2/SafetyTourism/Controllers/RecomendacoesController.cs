@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net.Http.Headers;
 
 namespace SafetyTourism.Controllers
 {
@@ -45,6 +46,11 @@ namespace SafetyTourism.Controllers
             var listaRecomendacoes = new List<Recomendacao>();
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/recomendacoes";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
@@ -97,6 +103,11 @@ namespace SafetyTourism.Controllers
             Recomendacao recomendacao;
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/recomendacoes/" + id;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
@@ -116,6 +127,11 @@ namespace SafetyTourism.Controllers
             var listaZonas = new List<Zona>();
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/zonas";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
@@ -135,6 +151,11 @@ namespace SafetyTourism.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
+                    UserInfo user = new UserInfo();
+                    StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(recomendacao), Encoding.UTF8, "application/json");
                     string endpoint = apiBaseUrl + "/recomendacoes";
                     var response = await client.PostAsync(endpoint, content);
@@ -155,6 +176,11 @@ namespace SafetyTourism.Controllers
             Recomendacao recomendacao;
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/recomendacoes/" + id;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
@@ -175,6 +201,11 @@ namespace SafetyTourism.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/recomendacoes/" + id;
                 var response = await client.DeleteAsync(endpoint);
             }
@@ -192,6 +223,11 @@ namespace SafetyTourism.Controllers
             Recomendacao recomendacao;
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/recomendacoes/" + id;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
@@ -204,6 +240,11 @@ namespace SafetyTourism.Controllers
             var listaZonas = new List<Zona>();
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                 string endpoint = apiBaseUrl + "/zonas";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
@@ -227,6 +268,11 @@ namespace SafetyTourism.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
+                    UserInfo user = new UserInfo();
+                    StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(recomendacao), Encoding.UTF8, "application/json");
                     string endpoint = apiBaseUrl + "/recomendacoes/" + id;
                     var response = await client.PutAsync(endpoint, content);

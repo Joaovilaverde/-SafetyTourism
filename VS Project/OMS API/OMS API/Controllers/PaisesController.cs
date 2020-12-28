@@ -11,7 +11,7 @@ using OMS_API.Models;
 
 namespace OMS_API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/paises")]
     [ApiController]
     public class PaisesController : ControllerBase
