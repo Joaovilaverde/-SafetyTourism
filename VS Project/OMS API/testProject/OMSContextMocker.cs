@@ -9,19 +9,22 @@ namespace testProject {
             var options = new DbContextOptionsBuilder<OMSContext>()
             .UseInMemoryDatabase(databaseName: dbName)
             .Options;
-            OMSContext dbContext = new OMSContext(options);
+            dbContext = new OMSContext(options);
             Seed();
             return dbContext;
         }
         private static void Seed() {
-            dbContext.Virus.Add(new Virus {
+            dbContext.Virus.Add(new Virus
+            {
                 Id = 1,
                 Nome = "Corona"
             });
+
             dbContext.Virus.Add(new Virus {
                 Id = 2,
                 Nome = "Super Death"
             });
+
             dbContext.Virus.Add(new Virus {
                 Id = 3,
                 Nome = "Uirusu"
