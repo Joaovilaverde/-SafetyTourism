@@ -27,8 +27,12 @@ namespace testProject {
 
             dbContext.Virus.Add(new Virus {
                 Id = 3,
-                Nome = "Uirusu"
+                Nome = "Gripe Asiática"
             });
+
+            dbContext.Zonas.Add(new Zona { Id = "EU", Nome = "Europa" });
+
+            dbContext.Paises.Add(new Pais { Id = "PT", Nome = "Portugal", ZonaId = "EU"});
 
             dbContext.SaveChanges();
 

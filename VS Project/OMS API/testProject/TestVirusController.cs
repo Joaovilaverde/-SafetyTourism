@@ -72,18 +72,18 @@ namespace testProject
         public async Task PutVirusAsync_ShouldUpdateVirus1Async() {
             //Arrange
             var testContext = OMSContextMocker.GetOMSContext("DBTestForVirusPutID");
-            var testController = new VirusController(testContext);
+            var _virusController = new VirusController(testContext);
 
             //Act
             var virus = new Virus {
                 Id = 1,
                 Nome = "COVID-19"
             };
-            var getVirus = await testController.GetVirus(1);
+            var getVirus = await _virusController.GetVirus(1);
             var v1 = getVirus.Value;
             testContext.Entry(v1).State = EntityState.Detached;
-            var result = await testController.PutVirus(1, virus);
-            var getresult = await testController.GetVirus(1);
+            var result = await _virusController.PutVirus(1, virus);
+            var getresult = await _virusController.GetVirus(1);
 
             //Assert
             Assert.IsType<NoContentResult>(result);
@@ -96,11 +96,11 @@ namespace testProject
         public async Task DeleteVirusAsync_ShouldDeleteVirus1Async() {
             //Arrange
             var testContext = OMSContextMocker.GetOMSContext("DBTestForVirusDelete");
-            var testController = new VirusController(testContext);
+            var _virusController = new VirusController(testContext);
 
             //Act
-            var result = await testController.DeleteVirus(1);
-            var get = await testController.GetVirus(1);
+            var result = await _virusController.DeleteVirus(1);
+            var get = await _virusController.GetVirus(1);
 
             //Assert
             Assert.IsType<NotFoundResult>(get.Result);
