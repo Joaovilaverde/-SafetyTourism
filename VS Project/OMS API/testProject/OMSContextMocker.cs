@@ -9,7 +9,7 @@ namespace testProject {
             var options = new DbContextOptionsBuilder<OMSContext>()
             .UseInMemoryDatabase(databaseName: dbName)
             .Options;
-            OMSContext dbContext = new OMSContext(options);
+            dbContext = new OMSContext(options);
             Seed();
             return dbContext;
         }
