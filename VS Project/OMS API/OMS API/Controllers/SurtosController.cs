@@ -101,8 +101,13 @@ namespace OMS_API.Controllers
 
         // PUT: Alterar a data de fim do surto
         [HttpPut("~/api/surtos/{zonaId}/{virusId}")]
-        public async Task<ActionResult> DataFim(Surto surto)
+        public async Task<ActionResult> DataFim(string zonaId, long virusId, Surto surto)
         {
+            if (zonaId != surto.ZonaId || virusId != surto.VirusId)
+            {
+                return BadRequest();
+            }
+
             _context.Entry(surto).State = EntityState.Modified;
 
             try
